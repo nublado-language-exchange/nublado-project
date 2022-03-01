@@ -3,8 +3,8 @@ from telegram.ext import CallbackContext
 
 from django.conf import settings
 
-from telegram_bot.bot_utils.chat_actions import send_typing_action
-from telegram_bot.bot_utils.user_status import (
+from django_telegram.bot_utils.chat_actions import send_typing_action
+from django_telegram.bot_utils.user_status import (
     restricted_group_owner,
     restricted_group_member
 )

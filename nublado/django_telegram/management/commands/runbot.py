@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
 
-from ...apps import TelegramBotConfig
+from ...apps import DjangoTelegramConfig
 
 
 class Command(BaseCommand):
@@ -19,7 +19,7 @@ class Command(BaseCommand):
                     error = "Bot id {} doesn't exist.".format(bot_id)
                     raise CommandError(error)
 
-                bot = TelegramBotConfig.registry.get_bot(bot_token)
+                bot = DjangoTelegramConfig.bot_registry.get_bot(bot_token)
                 if bot:
                     bot.start()
         return

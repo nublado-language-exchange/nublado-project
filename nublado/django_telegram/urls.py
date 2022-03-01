@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .views import BotWebhookView
 
-app_name = 'telegram_bot'
+app_name = 'django_telegram'
 
 urlpatterns = [
     re_path(

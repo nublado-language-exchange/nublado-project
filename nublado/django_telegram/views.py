@@ -7,7 +7,7 @@ from telegram.error import TelegramError
 from django.http import Http404, JsonResponse
 from django.views import View
 
-from .apps import TelegramBotConfig
+from .apps import DjangoTelegramConfig
 
 logger = logging.getLogger('django')
 
@@ -15,7 +15,7 @@ logger = logging.getLogger('django')
 class BotWebhookView(View):
     def post(self, request, *args, **kwargs):
         token = request.kwargs['token']
-        bot = TelegramBotConfig.registry.get_bot(token)
+        bot = DjangoTelegramConfig.registry.get_bot(token)
 
         if bot is not None:
             telegram_bot = bot.telegram_bot

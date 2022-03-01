@@ -7,10 +7,10 @@ from django.conf import settings
 from django.utils import timezone
 from django.utils.translation import gettext as _
 
-from telegram_bot.bot_utils.chat_actions import (
+from django_telegram.bot_utils.chat_actions import (
     send_typing_action
 )
-from telegram_bot.bot_utils.user_status import (
+from django_telegram.bot_utils.user_status import (
     restricted_group_member, restricted_group_owner
 )
 from language_days.functions import (

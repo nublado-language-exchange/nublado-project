@@ -9,11 +9,11 @@ from telegram.error import TelegramError
 from django.conf import settings
 from django.utils.translation import gettext as _
 
-from telegram_bot.bot_utils.chat_actions import (
+from django_telegram.bot_utils.chat_actions import (
     send_typing_action
 )
-from telegram_bot.bot_utils.user_utils import get_username_or_name
-from telegram_bot.bot_utils.user_status import (
+from django_telegram.bot_utils.user_utils import get_username_or_name
+from django_telegram.bot_utils.user_status import (
     restricted_group_owner
 )
 from django_telegram.models import TelegramGroupMember

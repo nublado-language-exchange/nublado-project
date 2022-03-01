@@ -41,7 +41,6 @@ DJANGO_APPS = [
 ]
 LOCAL_APPS = [
     'core.apps.CoreConfig',
-    'telegram_bot.apps.TelegramBotConfig',
     'django_telegram.apps.DjangoTelegramConfig',
     'group_points.apps.GroupPointsConfig',
     'language_days.apps.LanguageDaysConfig',

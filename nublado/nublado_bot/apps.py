@@ -3,8 +3,8 @@ import logging
 from django.conf import settings
 from django.apps import AppConfig
 
-from telegram_bot.apps import TelegramBotConfig
-from telegram_bot.bot import Bot
+from django_telegram.apps import DjangoTelegramConfig
+from django_telegram.bot import Bot
 
 logger = logging.getLogger('django')
 
@@ -30,7 +30,7 @@ class NubladoBotConfig(AppConfig):
             group_top_points, add_points_handler, remove_points_handler
         )
 
-        bot_registry = TelegramBotConfig.registry
+        bot_registry = DjangoTelegramConfig.bot_registry
         bot = Bot(settings.NUBLADO_BOT_TOKEN)
 
         # Register handlers
