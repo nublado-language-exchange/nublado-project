@@ -1,0 +1,306 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-02-27 12:19+0000\n"
+"PO-Revision-Date: 2022-02-27 04:20-0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.4.2\n"
+
+#: config/settings/base.py:104 config/settings/base.py:200
+msgid "English"
+msgstr "inglés"
+
+#: config/settings/base.py:105 config/settings/base.py:201
+msgid "Spanish"
+msgstr "español"
+
+#: config/settings/base.py:202
+msgid "Free"
+msgstr "libre"
+
+#: config/settings/base.py:211
+msgid "Monday"
+msgstr "lunes"
+
+#: config/settings/base.py:211
+msgid "Tuesday"
+msgstr "martes"
+
+#: config/settings/base.py:211
+msgid "Wednesday"
+msgstr "miércoles"
+
+#: config/settings/base.py:211
+msgid "Thursday"
+msgstr "jueves"
+
+#: config/settings/base.py:212
+msgid "Friday"
+msgstr "viernes"
+
+#: config/settings/base.py:212
+msgid "Saturday"
+msgstr "sábado"
+
+#: config/settings/base.py:212
+msgid "Sunday"
+msgstr "domingo"
+
+#: config/settings/base.py:215
+msgid "Mon."
+msgstr "Lun"
+
+#: config/settings/base.py:215
+msgid "Tue."
+msgstr "Mar"
+
+#: config/settings/base.py:215
+msgid "Wed."
+msgstr "Mié"
+
+#: config/settings/base.py:215
+msgid "Thu."
+msgstr "Jue"
+
+#: config/settings/base.py:216
+msgid "Fri."
+msgstr "Vie"
+
+#: config/settings/base.py:216
+msgid "Sat."
+msgstr "Sáb"
+
+#: config/settings/base.py:216
+msgid "Sun."
+msgstr "Dom"
+
+#: nublado/core/models.py:10
+msgid "date created"
+msgstr ""
+
+#: nublado/core/models.py:15
+msgid "date updated"
+msgstr ""
+
+#: nublado/django_telegram/managers.py:12
+msgid "Group id is required."
+msgstr ""
+
+#: nublado/django_telegram/managers.py:14
+msgid "User id is required."
+msgstr ""
+
+#: nublado/django_telegram/managers.py:37
+msgid "Message id is required."
+msgstr ""
+
+#: nublado/django_telegram/managers.py:39
+msgid "Chat id is required."
+msgstr ""
+
+#: nublado/django_telegram/models.py:18
+msgid "Telegram group member"
+msgstr ""
+
+#: nublado/django_telegram/models.py:19
+msgid "Telegram group members"
+msgstr ""
+
+#: nublado/django_telegram/models.py:36
+msgid "tmp message"
+msgstr ""
+
+#: nublado/django_telegram/models.py:37
+msgid "tmp messages"
+msgstr ""
+
+#: nublado/group_points/models.py:29
+msgid "group member points"
+msgstr ""
+
+#: nublado/language_days/functions.py:37
+#, python-brace-format
+msgid ""
+"*Schedule:*\n"
+"The day changes at {time_change} {timezone}."
+msgstr ""
+"*Horario:*\n"
+"El día cambia a las {time_change} {timezone}."
+
+#: nublado/language_days/models.py:24
+msgid "language day"
+msgstr ""
+
+#: nublado/language_days/models.py:25
+msgid "language days"
+msgstr ""
+
+#: nublado/language_days/models.py:47
+msgid "language day message"
+msgstr ""
+
+#: nublado/language_days/models.py:48
+msgid "language day messages"
+msgstr ""
+
+#: nublado/nublado_bot/bot_commands/group_admin.py:44
+#, python-brace-format
+msgid ""
+"*Members*\n"
+"{member_list}"
+msgstr ""
+
+#: nublado/nublado_bot/bot_commands/group_points.py:28
+msgid "strawberry"
+msgstr "fresa"
+
+#: nublado/nublado_bot/bot_commands/group_points.py:29
+msgid "strawberries"
+msgstr "fresas"
+
+#: nublado/nublado_bot/bot_commands/group_points.py:74
+#, python-brace-format
+msgid ""
+"*Top {point_name} rankings*\n"
+"{rankings_list}"
+msgstr ""
+
+#: nublado/nublado_bot/bot_commands/group_points.py:102
+#, python-brace-format
+msgid ""
+"*{sender_name} ({sender_points})* has given some {points_name} to "
+"*{receiver_name} ({receiver_points})*."
+msgstr ""
+"*{sender_name} ({sender_points})* le ha regalado unas {points_name} a "
+"*{receiver_name} ({receiver_points})*."
+
+#: nublado/nublado_bot/bot_commands/group_points.py:111
+#, python-brace-format
+msgid ""
+"*{sender_name} ({sender_points})* has given a {points_name} to "
+"*{receiver_name} ({receiver_points})*."
+msgstr ""
+"*{sender_name} ({sender_points})* le ha regalado una {points_name} a "
+"*{receiver_name} ({receiver_points})*."
+
+#: nublado/nublado_bot/bot_commands/group_points.py:120
+#, python-brace-format
+msgid "You can't give {points_name} to a bot."
+msgstr "No puedes regalarle {points_name} a un bot."
+
+#: nublado/nublado_bot/bot_commands/group_points.py:124
+#, python-brace-format
+msgid "You can't give {points_name} to yourself."
+msgstr "No puedes regalarte {points_name} ."
+
+#: nublado/nublado_bot/bot_commands/group_points.py:151
+#, python-brace-format
+msgid ""
+"*{sender_name} ({sender_points})* has taken some {points_name} from "
+"*{receiver_name} ({receiver_points})*."
+msgstr ""
+"*{sender_name} ({sender_points})* le ha quitado unas {points_name} a  "
+"*{receiver_name} ({receiver_points})*."
+
+#: nublado/nublado_bot/bot_commands/group_points.py:160
+#, python-brace-format
+msgid ""
+"*{sender_name} ({sender_points})* has taken a {points_name} from "
+"*{receiver_name} ({receiver_points})*."
+msgstr ""
+"*{sender_name} ({sender_points})* le ha quitado una {points_name} a  "
+"*{receiver_name} ({receiver_points})*."
+
+#: nublado/nublado_bot/bot_commands/group_points.py:169
+#, python-brace-format
+msgid "You can't take {points_name} from a bot."
+msgstr "No puedes quitarle {points_name} a un bot."
+
+#: nublado/nublado_bot/bot_commands/group_points.py:173
+#, python-brace-format
+msgid "You can't take {points_name} from yourself."
+msgstr "No puedes quitarte {points_name} ."
+
+#: nublado/nublado_bot/bot_commands/language_days.py:64
+#, python-brace-format
+msgid ""
+"It's {weekday}, {time} {timezone}.\n"
+"It's {language_day} day."
+msgstr ""
+"Es {weekday}, {time} {timezone}.\n"
+"Es día de {language_day}."
+
+#: nublado/nublado_bot/bot_commands/language_days.py:82
+#, python-brace-format
+msgid ""
+"Welcome, friends. It's {language_day} day.\n"
+"\n"
+"{schedule}"
+msgstr ""
+"Bienvenidos, amigos. Es día  de {language_day} .\n"
+"\n"
+"{schedule}"
+
+#~ msgid "polished pebble"
+#~ msgstr "guijarro pulido"
+
+#~ msgid "polished pebbles"
+#~ msgstr "guijarros pulidos"
+
+#~ msgid "chocolate coin"
+#~ msgstr "moneda de chocolate"
+
+#~ msgid "chocolate coins"
+#~ msgstr "monedas de chocolate"
+
+#~ msgid "potato"
+#~ msgstr "papa"
+
+#~ msgid "potatoes"
+#~ msgstr "papas"
+
+#~ msgid "coffee bean"
+#~ msgstr "grano de café"
+
+#~ msgid "coffee beans"
+#~ msgstr "granos de café"
+
+#~ msgid "pistachio"
+#~ msgstr "pistacho"
+
+#~ msgid "pistachios"
+#~ msgstr "pistachos"
+
+#~ msgid "magic pebble"
+#~ msgstr "guijarro mágico"
+
+#~ msgid "marble"
+#~ msgstr "canica"
+
+#~ msgid "pumpkin seed"
+#~ msgstr "semilla de calabaza"
+
+#~ msgid "pumpkin seeds"
+#~ msgstr "semillas de calabaza"
+
+#~ msgid "raindrops"
+#~ msgstr "gotas de lluvia"
+
+#~ msgid "nublado points"
+#~ msgstr "puntos de nublado"
+
+#, python-brace-format
+#~ msgid "You can't give {POINTS_NAME} to yourself."
+#~ msgstr "No puedes regalarte {points_name} ."

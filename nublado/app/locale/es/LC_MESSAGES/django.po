@@ -1,0 +1,239 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-02-21 02:44+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: config/settings/base.py:104 config/settings/base.py:200
+msgid "English"
+msgstr ""
+
+#: config/settings/base.py:105 config/settings/base.py:201
+msgid "Spanish"
+msgstr ""
+
+#: config/settings/base.py:202
+msgid "Free"
+msgstr ""
+
+#: config/settings/base.py:211
+msgid "Monday"
+msgstr ""
+
+#: config/settings/base.py:211
+msgid "Tuesday"
+msgstr ""
+
+#: config/settings/base.py:211
+msgid "Wednesday"
+msgstr ""
+
+#: config/settings/base.py:211
+msgid "Thursday"
+msgstr ""
+
+#: config/settings/base.py:212
+msgid "Friday"
+msgstr ""
+
+#: config/settings/base.py:212
+msgid "Saturday"
+msgstr ""
+
+#: config/settings/base.py:212
+msgid "Sunday"
+msgstr ""
+
+#: config/settings/base.py:215
+msgid "Mon."
+msgstr ""
+
+#: config/settings/base.py:215
+msgid "Tue."
+msgstr ""
+
+#: config/settings/base.py:215
+msgid "Wed."
+msgstr ""
+
+#: config/settings/base.py:215
+msgid "Thu."
+msgstr ""
+
+#: config/settings/base.py:216
+msgid "Fri."
+msgstr ""
+
+#: config/settings/base.py:216
+msgid "Sat."
+msgstr ""
+
+#: config/settings/base.py:216
+msgid "Sun."
+msgstr ""
+
+#: nublado/core/models.py:10
+msgid "date created"
+msgstr ""
+
+#: nublado/core/models.py:15
+msgid "date updated"
+msgstr ""
+
+#: nublado/django_telegram/managers.py:12
+msgid "Group id is required."
+msgstr ""
+
+#: nublado/django_telegram/managers.py:14
+msgid "User id is required."
+msgstr ""
+
+#: nublado/django_telegram/managers.py:37
+msgid "Message id is required."
+msgstr ""
+
+#: nublado/django_telegram/managers.py:39
+msgid "Chat id is required."
+msgstr ""
+
+#: nublado/django_telegram/models.py:18
+msgid "Telegram group member"
+msgstr ""
+
+#: nublado/django_telegram/models.py:19
+msgid "Telegram group members"
+msgstr ""
+
+#: nublado/django_telegram/models.py:36
+msgid "tmp message"
+msgstr ""
+
+#: nublado/django_telegram/models.py:37
+msgid "tmp messages"
+msgstr ""
+
+#: nublado/group_points/models.py:29
+msgid "group member points"
+msgstr ""
+
+#: nublado/language_days/functions.py:37
+#, python-brace-format
+msgid ""
+"*Schedule:*\n"
+"The day changes at {time_change} {timezone}."
+msgstr ""
+
+#: nublado/language_days/models.py:24
+msgid "language day"
+msgstr ""
+
+#: nublado/language_days/models.py:25
+msgid "language days"
+msgstr ""
+
+#: nublado/language_days/models.py:47
+msgid "language day message"
+msgstr ""
+
+#: nublado/language_days/models.py:48
+msgid "language day messages"
+msgstr ""
+
+#: nublado/nublado_bot/bot_commands/group_admin.py:44
+#, python-brace-format
+msgid ""
+"*Members*\n"
+"{member_list}"
+msgstr ""
+
+#: nublado/nublado_bot/bot_commands/group_points.py:28
+msgid "coffee bean"
+msgstr ""
+
+#: nublado/nublado_bot/bot_commands/group_points.py:29
+msgid "coffee beans"
+msgstr ""
+
+#: nublado/nublado_bot/bot_commands/group_points.py:74
+#, python-brace-format
+msgid ""
+"*Top {point_name} rankings*\n"
+"{rankings_list}"
+msgstr ""
+
+#: nublado/nublado_bot/bot_commands/group_points.py:102
+#, python-brace-format
+msgid ""
+"*{sender_name} ({sender_points})* has given some {points_name} to "
+"*{receiver_name} ({receiver_points})*."
+msgstr ""
+
+#: nublado/nublado_bot/bot_commands/group_points.py:111
+#, python-brace-format
+msgid ""
+"*{sender_name} ({sender_points})* has given a {points_name} to "
+"*{receiver_name} ({receiver_points})*."
+msgstr ""
+
+#: nublado/nublado_bot/bot_commands/group_points.py:120
+#, python-brace-format
+msgid "You can't give {points_name} to a bot."
+msgstr ""
+
+#: nublado/nublado_bot/bot_commands/group_points.py:124
+#, python-brace-format
+msgid "You can't give {points_name} to yourself."
+msgstr ""
+
+#: nublado/nublado_bot/bot_commands/group_points.py:151
+#, python-brace-format
+msgid ""
+"*{sender_name} ({sender_points})* has taken some {points_name} from "
+"*{receiver_name} ({receiver_points})*."
+msgstr ""
+
+#: nublado/nublado_bot/bot_commands/group_points.py:160
+#, python-brace-format
+msgid ""
+"*{sender_name} ({sender_points})* has taken a {points_name} from "
+"*{receiver_name} ({receiver_points})*."
+msgstr ""
+
+#: nublado/nublado_bot/bot_commands/group_points.py:169
+#, python-brace-format
+msgid "You can't take {points_name} from a bot."
+msgstr ""
+
+#: nublado/nublado_bot/bot_commands/group_points.py:173
+#, python-brace-format
+msgid "You can't take {points_name} from yourself."
+msgstr ""
+
+#: nublado/nublado_bot/bot_commands/language_days.py:64
+#, python-brace-format
+msgid ""
+"It's {weekday}, {time} {timezone}.\n"
+"It's {language_day} day."
+msgstr ""
+
+#: nublado/nublado_bot/bot_commands/language_days.py:82
+#, python-brace-format
+msgid ""
+"Welcome, friends. It's {language_day} day.\n"
+"\n"
+"{schedule}"
+msgstr ""
