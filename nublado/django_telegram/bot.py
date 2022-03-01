@@ -3,6 +3,7 @@ import datetime
 import pytz
 import logging
 
+from core.utils import remove_lead_and_trail_slash
 from telegram import Bot as TelegramBot, ParseMode, Update
 from telegram.ext import Defaults, Updater, CommandHandler
 
@@ -30,24 +31,13 @@ class Bot(object):
         dt = settings.DJANGO_TELEGRAM
 
         if dt['mode'] == settings.BOT_MODE_POLLING:
-            # Polling
             logger.info("Bot mode: polling")
             self.updater.start_polling()
             self.updater.idle()
         elif dt['mode'] == settings.BOT_MODE_WEBHOOK:
-            # Webook
             logger.info("Bot mode: webhooks")
-
-            webhook_site = dt['webhook_site']
-            if webhook_site.endswith("/"):
-                webhook_site = webhook_site[:-1]
-
-            webhook_path = dt['webhook_path']
-            if webhook_path.startswith("/"):
-                webhook_path = webhook_path[1:]
-            if webhook_path.endswith("/"):
-                webhook_path = webhook_path[:-1]
-
+            webhook_site = remove_lead_and_trail_slash(dt['webhook_site'])
+            webhook_path = remove_lead_and_trail_slash(dt['webhook_path'])
             url_path = f"{webhook_path}/{self.token}"
             webhook_url = f"{webhook_site}/{url_path}"
 
