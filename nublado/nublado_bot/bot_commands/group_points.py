@@ -25,8 +25,8 @@ ADD_POINTS_CHAR = '+'
 ADD_POINTS_REGEX = '^[' + ADD_POINTS_CHAR + '][\s\S]*$'
 REMOVE_POINTS_CHAR = '-'
 REMOVE_POINTS_REGEX = '^[' + REMOVE_POINTS_CHAR + '][\s\S]*$'
-POINT_NAME = _("strawberry")
-POINTS_NAME = _("strawberries")
+POINT_NAME = _("raindrop")
+POINTS_NAME = _("raindrops")
 TOP_POINTS_LIMIT = 10
 GROUP_ID = settings.NUBLADO_GROUP_ID
 

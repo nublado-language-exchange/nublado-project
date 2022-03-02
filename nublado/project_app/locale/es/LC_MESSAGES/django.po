@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-27 12:19+0000\n"
-"PO-Revision-Date: 2022-02-27 04:20-0800\n"
+"POT-Creation-Date: 2022-03-02 00:22+0000\n"
+"PO-Revision-Date: 2022-03-01 16:23-0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -18,71 +18,71 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.2\n"
 
-#: config/settings/base.py:104 config/settings/base.py:200
+#: config/settings/base.py:103 config/settings/base.py:175
 msgid "English"
 msgstr "inglés"
 
-#: config/settings/base.py:105 config/settings/base.py:201
+#: config/settings/base.py:104 config/settings/base.py:176
 msgid "Spanish"
 msgstr "español"
 
-#: config/settings/base.py:202
+#: config/settings/base.py:177
 msgid "Free"
 msgstr "libre"
 
-#: config/settings/base.py:211
+#: config/settings/base.py:186
 msgid "Monday"
 msgstr "lunes"
 
-#: config/settings/base.py:211
+#: config/settings/base.py:186
 msgid "Tuesday"
 msgstr "martes"
 
-#: config/settings/base.py:211
+#: config/settings/base.py:186
 msgid "Wednesday"
 msgstr "miércoles"
 
-#: config/settings/base.py:211
+#: config/settings/base.py:186
 msgid "Thursday"
 msgstr "jueves"
 
-#: config/settings/base.py:212
+#: config/settings/base.py:187
 msgid "Friday"
 msgstr "viernes"
 
-#: config/settings/base.py:212
+#: config/settings/base.py:187
 msgid "Saturday"
 msgstr "sábado"
 
-#: config/settings/base.py:212
+#: config/settings/base.py:187
 msgid "Sunday"
 msgstr "domingo"
 
-#: config/settings/base.py:215
+#: config/settings/base.py:190
 msgid "Mon."
 msgstr "Lun"
 
-#: config/settings/base.py:215
+#: config/settings/base.py:190
 msgid "Tue."
 msgstr "Mar"
 
-#: config/settings/base.py:215
+#: config/settings/base.py:190
 msgid "Wed."
 msgstr "Mié"
 
-#: config/settings/base.py:215
+#: config/settings/base.py:190
 msgid "Thu."
 msgstr "Jue"
 
-#: config/settings/base.py:216
+#: config/settings/base.py:191
 msgid "Fri."
 msgstr "Vie"
 
-#: config/settings/base.py:216
+#: config/settings/base.py:191
 msgid "Sat."
 msgstr "Sáb"
 
-#: config/settings/base.py:216
+#: config/settings/base.py:191
 msgid "Sun."
 msgstr "Dom"
 
@@ -163,12 +163,12 @@ msgid ""
 msgstr ""
 
 #: nublado/nublado_bot/bot_commands/group_points.py:28
-msgid "strawberry"
-msgstr "fresa"
+msgid "raindrop"
+msgstr "gota de lluvia"
 
 #: nublado/nublado_bot/bot_commands/group_points.py:29
-msgid "strawberries"
-msgstr "fresas"
+msgid "raindrops"
+msgstr "gotas de lluvia"
 
 #: nublado/nublado_bot/bot_commands/group_points.py:74
 #, python-brace-format
@@ -253,6 +253,12 @@ msgstr ""
 "\n"
 "{schedule}"
 
+#~ msgid "strawberry"
+#~ msgstr "fresa"
+
+#~ msgid "strawberries"
+#~ msgstr "fresas"
+
 #~ msgid "polished pebble"
 #~ msgstr "guijarro pulido"
 
@@ -294,9 +300,6 @@ msgstr ""
 
 #~ msgid "pumpkin seeds"
 #~ msgstr "semillas de calabaza"
-
-#~ msgid "raindrops"
-#~ msgstr "gotas de lluvia"
 
 #~ msgid "nublado points"
 #~ msgstr "puntos de nublado"
