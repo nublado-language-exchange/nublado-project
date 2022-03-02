@@ -4,7 +4,8 @@ from functools import wraps
 from telegram import Update, Bot
 from telegram.utils.helpers import escape_markdown
 from telegram.constants import (
-    CHATMEMBER_CREATOR, CHATMEMBER_ADMINISTRATOR, CHATMEMBER_MEMBER
+    CHATMEMBER_CREATOR, CHATMEMBER_ADMINISTRATOR, CHATMEMBER_MEMBER,
+    CHAT_GROUP, CHAT_SUPERGROUP
 )
 from telegram.ext import CallbackContext
 
@@ -16,6 +17,11 @@ GROUP_MEMBERS = [
     CHATMEMBER_CREATOR,
     CHATMEMBER_ADMINISTRATOR,
     CHATMEMBER_MEMBER
+]
+
+GROUP_TYPES = [
+    CHAT_GROUP,
+    CHAT_SUPERGROUP
 ]
 
 BOTS = settings.DJANGO_TELEGRAM['bots']
@@ -31,6 +37,16 @@ def get_group_member(bot: Bot, user_id: int, group_id: int = None):
         return chat_member
     except:
         return None
+
+
+def is_group_chat(bot: Bot, chat_id: int, group_id: int = None):
+    try:
+        if not group_id:
+            group_id = BOTS[bot.token]['group_id']
+        chat = bot.get_chat(group_id)
+        return chat.type in GROUP_TYPES and chat_id == group_id
+    except:
+        return False
 
 
 def is_group_owner(bot: Bot, user_id: int) -> bool:
@@ -68,6 +84,21 @@ def send_non_member_message(update: Update, bot: Bot) -> None:
 
 
 # Decorators for command handlers
+def restricted_group_chat(func):
+    """Restrict access to messages coming from specific group the bot belongs to."""
+    @wraps(func)
+    def wrapped(update: Update, context: CallbackContext):
+        chat_id = update.effective_chat.id
+
+        if not is_group_chat(context.bot, chat_id):
+            logger.warning(f"Unauthorized access: {func.__name__} - {user.id} - {user.username}.")
+            return
+        else:
+            return func(update, context)
+
+    return wrapped
+
+
 def restricted_group_member(func):
     """Restrict access to commands to group members."""
     @wraps(func)
@@ -75,7 +106,7 @@ def restricted_group_member(func):
         user = update.effective_user
 
         if not is_group_member(context.bot, user.id):
-            logger.info(f"Unauthorized access: {func.__name__} - {user.id} - {user.username}.")
+            logger.warning(f"Unauthorized access: {func.__name__} - {user.id} - {user.username}.")
             send_non_member_message(update, context.bot)
             return
         else:

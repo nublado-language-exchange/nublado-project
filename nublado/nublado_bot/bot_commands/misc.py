@@ -6,7 +6,8 @@ from django.conf import settings
 from django_telegram.bot_utils.chat_actions import send_typing_action
 from django_telegram.bot_utils.user_status import (
     restricted_group_owner,
-    restricted_group_member
+    restricted_group_member,
+    restricted_group_chat
 )
 
 # To do:Verify that  bot is in group.
