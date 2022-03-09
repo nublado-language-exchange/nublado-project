@@ -39,7 +39,7 @@ def get_group_member(bot: Bot, user_id: int, group_id: int = None):
         return None
 
 
-def is_group_chat(bot: Bot, chat_id: int, group_id: int = None):
+def is_group_chat(bot: Bot, chat_id: int, group_id: int = None) -> bool:
     try:
         if not group_id:
             group_id = BOTS[bot.token]['group_id']

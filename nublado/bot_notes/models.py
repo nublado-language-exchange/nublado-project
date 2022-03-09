@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from core.models import TimestampModel
+from .managers import GroupNoteManager
 
 
 class GroupNote(TimestampModel):
@@ -17,6 +18,8 @@ class GroupNote(TimestampModel):
         null=True,
         blank=True
     )
+
+    objects = GroupNoteManager()
 
     class Meta:
         verbose_name = _("Bot note")

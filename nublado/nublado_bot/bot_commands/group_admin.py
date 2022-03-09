@@ -53,23 +53,33 @@ def update_group_members(update: Update, context: CallbackContext) -> None:
 def member_join(update: Update, context: CallbackContext) -> None:
     if update.message.new_chat_members:
         for user in update.message.new_chat_members:
-            name = get_username_or_name(user)
-            message = f"*{name}* has appeared."
+            message = _("Welcome to the group, {name}.").format(
+                name=user.mention_markdown()
+            )
             context.bot.send_message(
                 chat_id=GROUP_ID,
                 text=message
             )
+        # Delete service message.
+        try:
+            context.bot.delete_message(
+                message_id=update.message.message_id,
+                chat_id=update.effective_chat.id
+            )
+        except:
+            pass
 
 
 def member_exit(update: Update, context: CallbackContext) -> None:
     if update.message.left_chat_member:
-        user = update.message.left_chat_member
-        name = get_username_or_name(user)
-        message = f"*{name}* has disappeared."
-        context.bot.send_message(
-            chat_id=GROUP_ID,
-            text=message
-        )
+        # Delete service message.
+        try:
+            context.bot.delete_message(
+                message_id=update.message.message_id,
+                chat_id=update.effective_chat.id
+            )
+        except:
+            pass
 
 
 member_join_handler = MessageHandler(

@@ -29,6 +29,10 @@ class NubladoBotConfig(AppConfig):
         from .bot_commands.group_points import (
             group_top_points, add_points_handler, remove_points_handler
         )
+        # from .bot_commands.notes import (
+        #     group_notes,
+        #     save_group_note
+        # )
 
         bot_registry = DjangoTelegramConfig.bot_registry
         bot = Bot(settings.NUBLADO_BOT_TOKEN)
@@ -36,8 +40,8 @@ class NubladoBotConfig(AppConfig):
         # Register handlers
         # group_admin
         bot.add_command_handler('update_group_members', update_group_members)
-        # bot.add_handler(member_join_handler)
-        # bot.add_handler(member_exit_handler)
+        bot.add_handler(member_join_handler)
+        bot.add_handler(member_exit_handler)
         # misc
         bot.add_command_handler('start', start)
         bot.add_command_handler('reverse', reverse_text)
@@ -56,6 +60,9 @@ class NubladoBotConfig(AppConfig):
         bot.add_handler(add_points_handler)
         bot.add_handler(remove_points_handler)
         bot.add_command_handler('top_points', group_top_points)
+        # notes
+        # bot.add_command_handler('group_notes', group_notes)
+        # bot.add_command_handler('save_group_note', save_group_note)
         # Add the bot to the registry.
         bot_registry.add_bot(NubladoBotConfig.bot_key, bot)
 
