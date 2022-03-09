@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-02 00:22+0000\n"
-"PO-Revision-Date: 2022-03-01 16:23-0800\n"
+"POT-Creation-Date: 2022-03-09 14:09+0000\n"
+"PO-Revision-Date: 2022-03-09 06:11-0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -18,73 +18,93 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.2\n"
 
-#: config/settings/base.py:103 config/settings/base.py:175
+#: config/settings/base.py:104 config/settings/base.py:176
 msgid "English"
 msgstr "inglés"
 
-#: config/settings/base.py:104 config/settings/base.py:176
+#: config/settings/base.py:105 config/settings/base.py:177
 msgid "Spanish"
 msgstr "español"
 
-#: config/settings/base.py:177
+#: config/settings/base.py:178
 msgid "Free"
 msgstr "libre"
 
-#: config/settings/base.py:186
+#: config/settings/base.py:187
 msgid "Monday"
 msgstr "lunes"
 
-#: config/settings/base.py:186
+#: config/settings/base.py:187
 msgid "Tuesday"
 msgstr "martes"
 
-#: config/settings/base.py:186
+#: config/settings/base.py:187
 msgid "Wednesday"
 msgstr "miércoles"
 
-#: config/settings/base.py:186
+#: config/settings/base.py:187
 msgid "Thursday"
 msgstr "jueves"
 
-#: config/settings/base.py:187
+#: config/settings/base.py:188
 msgid "Friday"
 msgstr "viernes"
 
-#: config/settings/base.py:187
+#: config/settings/base.py:188
 msgid "Saturday"
 msgstr "sábado"
 
-#: config/settings/base.py:187
+#: config/settings/base.py:188
 msgid "Sunday"
 msgstr "domingo"
 
-#: config/settings/base.py:190
+#: config/settings/base.py:191
 msgid "Mon."
 msgstr "Lun"
 
-#: config/settings/base.py:190
+#: config/settings/base.py:191
 msgid "Tue."
 msgstr "Mar"
 
-#: config/settings/base.py:190
+#: config/settings/base.py:191
 msgid "Wed."
 msgstr "Mié"
 
-#: config/settings/base.py:190
+#: config/settings/base.py:191
 msgid "Thu."
 msgstr "Jue"
 
-#: config/settings/base.py:191
+#: config/settings/base.py:192
 msgid "Fri."
 msgstr "Vie"
 
-#: config/settings/base.py:191
+#: config/settings/base.py:192
 msgid "Sat."
 msgstr "Sáb"
 
-#: config/settings/base.py:191
+#: config/settings/base.py:192
 msgid "Sun."
 msgstr "Dom"
+
+#: nublado/bot_notes/managers.py:14
+msgid "Note tag is required."
+msgstr ""
+
+#: nublado/bot_notes/managers.py:16 nublado/django_telegram/managers.py:12
+msgid "Group id is required."
+msgstr ""
+
+#: nublado/bot_notes/managers.py:41
+msgid "Message id or content is required."
+msgstr ""
+
+#: nublado/bot_notes/models.py:25
+msgid "Bot note"
+msgstr ""
+
+#: nublado/bot_notes/models.py:26
+msgid "Bot notes"
+msgstr ""
 
 #: nublado/core/models.py:10
 msgid "date created"
@@ -92,10 +112,6 @@ msgstr ""
 
 #: nublado/core/models.py:15
 msgid "date updated"
-msgstr ""
-
-#: nublado/django_telegram/managers.py:12
-msgid "Group id is required."
 msgstr ""
 
 #: nublado/django_telegram/managers.py:14
@@ -155,7 +171,39 @@ msgstr ""
 msgid "language day messages"
 msgstr ""
 
-#: nublado/nublado_bot/bot_commands/group_admin.py:44
+#: nublado/nublado_bot/bot_commands/group_admin.py:31
+#, python-brace-format
+msgid ""
+"Welcome to the group, {name}.\n"
+"\n"
+"Please read the following rules and click the \"I agree\" button to "
+"participate.\n"
+"\n"
+"*Rules (tentative)*\n"
+"- Communicate in only English and Spanish.\n"
+"- Don't harass other group members.\n"
+"- Don't send private messages to other group members without their "
+"permission.\n"
+"- Be a good example. There are people here learning your language. Help them "
+"out with corrections."
+msgstr ""
+"Bienvenido/a al grupo, {name}.\n"
+"\n"
+"Por favor, lee las siguientes reglas y pulsa el botón de \"Estoy de acuerdo"
+"\" para participar.\n"
+"\n"
+"*Reglas (tentativas)*\n"
+"- Comunícate solo en inglés y español.\n"
+"- No acoses a otros miembros del grupo.\n"
+"- No envíes mensajes privados a otros miembros del grupo sin su permiso.\n"
+"- Sé un buen ejemplo. Hay personas aquí que aprenden tu idioma. Ayúdalas con "
+"las correcciones."
+
+#: nublado/nublado_bot/bot_commands/group_admin.py:40
+msgid "I agree."
+msgstr "Estoy de acuerdo."
+
+#: nublado/nublado_bot/bot_commands/group_admin.py:61
 #, python-brace-format
 msgid ""
 "*Members*\n"
@@ -252,6 +300,25 @@ msgstr ""
 "Bienvenidos, amigos. Es día  de {language_day} .\n"
 "\n"
 "{schedule}"
+
+#: nublado/nublado_bot/bot_commands/notes.py:30
+msgid ""
+"*Group notes*\n"
+"{}"
+msgstr ""
+
+#: nublado/nublado_bot/bot_commands/notes.py:44
+#, python-brace-format
+msgid "Group note *{note_tag}* has been saved."
+msgstr ""
+
+#: nublado/nublado_bot/bot_commands/notes.py:77
+msgid "A group note needs content."
+msgstr ""
+
+#: nublado/nublado_bot/bot_commands/notes.py:84
+msgid "A group note must have a tag."
+msgstr ""
 
 #~ msgid "strawberry"
 #~ msgstr "fresa"
