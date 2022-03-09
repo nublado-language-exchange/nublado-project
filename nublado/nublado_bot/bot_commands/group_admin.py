@@ -1,12 +1,12 @@
 import logging
 
 from telegram import (
-    Update, User as TelegramUser,
+    Bot, Update, ChatPermissions,
     InlineKeyboardButton, InlineKeyboardMarkup
 )
 
 from telegram.ext import (
-    CallbackContext, MessageHandler, Filters
+    CallbackContext, CallbackQueryHandler, MessageHandler, Filters
 )
 from telegram.error import TelegramError
 
@@ -26,8 +26,7 @@ from language_days.functions import set_language_day_locale
 logger = logging.getLogger('django')
 
 GROUP_ID = settings.NUBLADO_GROUP_ID
-
-welcome_message = _(
+WELCOME_MSG = _(
     "Welcome to the group, {name}.\n\n" \
     "Please read the following rules and click the \"I agree\" button to participate.\n\n" \
     "*Rules (tentative)*\n" \
@@ -36,8 +35,44 @@ welcome_message = _(
     "- Don't send private messages to other group members without their permission.\n" \
     "- Be a good example. There are people here learning your language. Help them out with corrections."
 )
+AGREE_MSG = _("I agree.")
 
-agree_message = _("I agree.")
+# Callback data
+AGREE_BTN_CALLBACK_DATA = "chat_member_welcome_agree"
+
+
+def restrict_chat_member(bot: Bot, user_id: int, chat_id: int):
+    try:
+        permissions = ChatPermissions(
+            can_send_messages=False,
+            can_send_media_messages=False,
+            can_send_polls=False,
+            can_send_other_messages=False  
+        )
+        bot.restrict_chat_member(
+            user_id=user_id,
+            chat_id=chat_id,
+            permissions=permissions 
+        )
+        return True
+    except:
+        logger.error("Error disactivating member " + user_id)
+        return False
+
+
+def unrestrict_chat_member(bot: Bot, user_id: int, chat_id: int):
+    try:
+        chat = bot.get_chat(chat_id)
+        permissions = chat.permissions
+        bot.restrict_chat_member(
+            user_id=user_id,
+            chat_id=chat_id,
+            permissions=permissions
+        )
+        return True
+    except:
+        logger.error("Error unrestricting member " + user_id)
+        return False
 
 
 @send_typing_action
@@ -71,19 +106,23 @@ def member_join(update: Update, context: CallbackContext) -> None:
     if update.message.new_chat_members:
         set_language_day_locale()
         for user in update.message.new_chat_members:
-            message = _(welcome_message).format(
+            restrict_chat_member(context.bot, user.id, GROUP_ID)
+            message = _(WELCOME_MSG).format(
                 name=user.mention_markdown()
             )
+            callback_data = AGREE_BTN_CALLBACK_DATA + " " + str(user.id)
             keyboard = [
                 [
-                    InlineKeyboardButton(_(agree_message), callback_data='1'),
+                    InlineKeyboardButton(
+                        _(AGREE_MSG),
+                        callback_data=callback_data
+                    ),
                 ],
             ]
-
             reply_markup = InlineKeyboardMarkup(keyboard)
             context.bot.send_message(
-                chat_id=GROUP_ID,
                 text=message,
+                chat_id=GROUP_ID,
                 reply_markup=reply_markup
             )
         # Delete service message.
@@ -119,4 +158,46 @@ member_join_handler = MessageHandler(
 member_exit_handler = MessageHandler(
     Filters.status_update.left_chat_member,
     member_exit
+)
+
+
+def chat_member_welcome_agree(
+    bot: Bot, user_id: int, chat_id: int, welcome_message_id: int = None
+) -> None:
+    unrestrict_chat_member(bot, user_id, chat_id)
+    if welcome_message_id:
+        try:
+            bot.delete_message(
+                message_id=welcome_message_id,
+                chat_id=chat_id
+            )
+        except:
+            logger.error("Error tring to delete  welcome message " + welcome_message_id)
+
+
+def welcome_button_handler_c(update: Update, context: CallbackContext) -> None:
+    """Parse the CallbackQuery and perform corresponding actions."""
+    query = update.callback_query
+    query.answer()
+    data = query.data.split(" ")
+    if len(data) >= 2:
+        if data[0] == AGREE_BTN_CALLBACK_DATA:
+            user_id = int(data[1])
+            # Check if effective user is the same
+            if update.effective_user.id == user_id:
+                chat_member_welcome_agree(
+                    context.bot,
+                    user_id,
+                    GROUP_ID,
+                    query.message.message_id
+                )
+            else:
+                logger.info("Another user clicked the welcome buttton.")
+    else:
+        query.edit_message_text(text=f"Selected option: {query.data}")
+
+
+welcome_button_handler = CallbackQueryHandler(
+    welcome_button_handler_c,
+    pattern='^' + AGREE_BTN_CALLBACK_DATA
 )
