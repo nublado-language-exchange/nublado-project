@@ -64,6 +64,7 @@ def unrestrict_chat_member(bot: Bot, user_id: int, chat_id: int):
     try:
         chat = bot.get_chat(chat_id)
         permissions = chat.permissions
+        logger.info(permissions)
         bot.restrict_chat_member(
             user_id=user_id,
             chat_id=chat_id,
@@ -183,7 +184,7 @@ def welcome_button_handler_c(update: Update, context: CallbackContext) -> None:
     if len(data) >= 2:
         if data[0] == AGREE_BTN_CALLBACK_DATA:
             user_id = int(data[1])
-            # Check if effective user is the same
+            # Check if effective user is the user that clicked the button.
             if update.effective_user.id == user_id:
                 chat_member_welcome_agree(
                     context.bot,
