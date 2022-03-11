@@ -43,8 +43,8 @@ def clear_tmp_messages(bot: Bot) -> None:
             tmp_message.delete()
 
 
+@restricted_group_member(group_id=GROUP_ID)
 @send_typing_action
-@restricted_group_member
 def schedule(update: Update, context: CallbackContext) -> None:
     """Display the group schedule."""
     message = get_language_day_schedule()
@@ -54,8 +54,8 @@ def schedule(update: Update, context: CallbackContext) -> None:
     )
 
 
+@restricted_group_member(group_id=GROUP_ID)
 @send_typing_action
-@restricted_group_member
 def language_day(update: Update, context: CallbackContext) -> None:
     """Display the current language day."""
     set_language_day_locale()
@@ -101,8 +101,8 @@ def initiate_language_day_c(context: CallbackContext) -> None:
     logger.info(tmp_message)
 
 
+@restricted_group_owner(group_id=GROUP_ID)
 @send_typing_action
-@restricted_group_owner
 def initiate_language_day(update: Update, context: CallbackContext) -> None:
     """Manually execute language-day-initiation tasks."""
     initiate_language_day_c(context)

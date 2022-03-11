@@ -6,16 +6,15 @@ from django.conf import settings
 from django_telegram.bot_utils.chat_actions import send_typing_action
 from django_telegram.bot_utils.user_status import (
     restricted_group_owner,
-    restricted_group_member,
-    restricted_group_chat
+    restricted_group_member
 )
 
 # To do:Verify that  bot is in group.
 GROUP_ID = settings.NUBLADO_GROUP_ID
 
 
+@restricted_group_member(group_id=GROUP_ID)
 @send_typing_action
-@restricted_group_member
 def start(update: Update, context: CallbackContext) -> None:
     """Send a message and prompt a reply on start."""
     user = update.effective_user
@@ -30,8 +29,8 @@ def start(update: Update, context: CallbackContext) -> None:
     )
 
 
+@restricted_group_owner(group_id=GROUP_ID)
 @send_typing_action
-@restricted_group_owner
 def echo(update: Update, context: CallbackContext) -> None:
     """Echo a message to the group."""
     message = " ".join(context.args)
@@ -41,8 +40,8 @@ def echo(update: Update, context: CallbackContext) -> None:
     )
 
 
+@restricted_group_member(group_id=GROUP_ID)
 @send_typing_action
-@restricted_group_member
 def reverse_text(update: Update, context: CallbackContext) -> None:
     """Reverse the text provided as an argument and display it."""
     if context.args:
