@@ -1,3 +1,4 @@
+import datetime as dt
 import logging
 
 from telegram import (
@@ -65,10 +66,14 @@ def unrestrict_chat_member(bot: Bot, user_id: int, chat_id: int):
         chat = bot.get_chat(chat_id)
         permissions = chat.permissions
         logger.info(permissions)
+        interval_minutes = 5
+        date_now = dt.datetime.now()
+        date_until = date_now + dt.timedelta(minutes=interval_minutes)
         bot.restrict_chat_member(
             user_id=user_id,
             chat_id=chat_id,
-            permissions=permissions
+            permissions=permissions,
+            until_date=date_until
         )
         return True
     except:
