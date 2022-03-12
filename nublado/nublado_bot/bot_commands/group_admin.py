@@ -62,6 +62,7 @@ def restrict_chat_member(bot: Bot, user_id: int, chat_id: int):
 
 
 def unrestrict_chat_member(bot: Bot, user_id: int, chat_id: int):
+    """Restore restricted chat member to group's default member permissions."""
     try:
         chat = bot.get_chat(chat_id)
         permissions = chat.permissions
