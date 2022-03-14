@@ -10,6 +10,7 @@ from telegram.ext import (
     CallbackContext, CallbackQueryHandler, MessageHandler, Filters
 )
 from telegram.error import TelegramError
+from telegram.constants import CHATMEMBER_CREATOR
 
 from django.conf import settings
 from django.utils.translation import gettext as _
@@ -19,7 +20,7 @@ from django_telegram.bot_utils.chat_actions import (
 )
 from django_telegram.bot_utils.user_utils import get_username_or_name
 from django_telegram.bot_utils.user_status import (
-    restricted_group_owner
+    restricted_group_member
 )
 from django_telegram.models import TelegramGroupMember
 from language_days.functions import set_language_day_locale
@@ -67,7 +68,7 @@ def unrestrict_chat_member(bot: Bot, user_id: int, chat_id: int):
         chat = bot.get_chat(chat_id)
         permissions = chat.permissions
         logger.info(permissions)
-        interval_minutes = 5
+        interval_minutes = 2
         date_now = dt.datetime.now()
         date_until = date_now + dt.timedelta(minutes=interval_minutes)
         bot.restrict_chat_member(
@@ -83,7 +84,7 @@ def unrestrict_chat_member(bot: Bot, user_id: int, chat_id: int):
 
 
 @send_typing_action
-@restricted_group_owner
+@restricted_group_member(group_id=GROUP_ID, member_status=CHATMEMBER_CREATOR)
 def update_group_members(update: Update, context: CallbackContext) -> None:
     member_list = []
     group_members = TelegramGroupMember.objects.filter(group_id=GROUP_ID)

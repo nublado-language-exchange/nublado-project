@@ -2,6 +2,7 @@ import logging
 
 from telegram import Update, Bot
 from telegram.ext import CallbackContext
+from telegram.constants import CHATMEMBER_CREATOR
 
 from django.conf import settings
 from django.utils import timezone
@@ -11,7 +12,7 @@ from django_telegram.bot_utils.chat_actions import (
     send_typing_action
 )
 from django_telegram.bot_utils.user_status import (
-    restricted_group_member, restricted_group_owner
+    restricted_group_member
 )
 from language_days.functions import (
     get_language_day, set_language_day_locale,
@@ -101,7 +102,7 @@ def initiate_language_day_c(context: CallbackContext) -> None:
     logger.info(tmp_message)
 
 
-@restricted_group_owner(group_id=GROUP_ID)
+@restricted_group_member(group_id=GROUP_ID, member_status=CHATMEMBER_CREATOR)
 @send_typing_action
 def initiate_language_day(update: Update, context: CallbackContext) -> None:
     """Manually execute language-day-initiation tasks."""

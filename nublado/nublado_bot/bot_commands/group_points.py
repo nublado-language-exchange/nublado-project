@@ -14,7 +14,7 @@ from django_telegram.bot_utils.chat_actions import (
     send_typing_action
 )
 from django_telegram.bot_utils.user_status import (
-    get_group_member, restricted_group
+    get_chat_member, restricted_group_member
 )
 from django_telegram.models import TelegramGroupMember
 from group_points.models import GroupMemberPoints
@@ -57,7 +57,7 @@ def group_top_points(update: Update, context: CallbackContext) -> None:
         for member in member_points:
             points = member.points
             user_id = member.group_member.user_id
-            chat_member = get_group_member(context, user_id, GROUP_ID)
+            chat_member = get_chat_member(context, user_id, GROUP_ID)
 
             if chat_member:
                 user = chat_member.user
@@ -79,7 +79,7 @@ def group_top_points(update: Update, context: CallbackContext) -> None:
         )
 
 
-@restricted_group(group_id=GROUP_ID)
+@restricted_group_member(group_id=GROUP_ID)
 @send_typing_action
 def add_points(update: Update, context: CallbackContext) -> None:
     # Check if the message is a reply to another message.
@@ -130,7 +130,7 @@ def add_points(update: Update, context: CallbackContext) -> None:
         )
 
 
-@restricted_group(group_id=GROUP_ID)
+@restricted_group_member(group_id=GROUP_ID)
 @send_typing_action
 def remove_points(update: Update, context: CallbackContext) -> None:
     if update.message.reply_to_message:
