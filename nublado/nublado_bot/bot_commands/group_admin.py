@@ -62,13 +62,11 @@ def restrict_chat_member(bot: Bot, user_id: int, chat_id: int):
         return False
 
 
-def unrestrict_chat_member(bot: Bot, user_id: int, chat_id: int):
+def unrestrict_chat_member(bot: Bot, user_id: int, chat_id: int, interval_minutes: int = 2):
     """Restore restricted chat member to group's default member permissions."""
     try:
         chat = bot.get_chat(chat_id)
         permissions = chat.permissions
-        logger.info(permissions)
-        interval_minutes = 2
         date_now = dt.datetime.now()
         date_until = date_now + dt.timedelta(minutes=interval_minutes)
         bot.restrict_chat_member(

@@ -202,7 +202,7 @@ BOT_MODE_POLLING = "polling"
 NUBLADO_BOT = 'nubladobot'
 NUBLADO_BOT_TOKEN = get_env_variable('NUBLADO_BOT_TOKEN')
 NUBLADO_GROUP_ID = int(get_env_variable('NUBLADO_GROUP_ID'))
-# NUBLADO_REPO_ID = int(get_env_variable('NUBLADO_REPO_ID'))
+NUBLADO_REPO_ID = int(get_env_variable('NUBLADO_REPO_ID'))
 NUBLADO_GROUP_OWNER_ID = int(get_env_variable('NUBLADO_GROUP_OWNER_ID'))
 NUBLADO_SUDO_LIST = [NUBLADO_GROUP_OWNER_ID, ]
 
@@ -219,6 +219,7 @@ DJANGO_TELEGRAM = {
         NUBLADO_BOT_TOKEN: {
             'token': NUBLADO_BOT_TOKEN,
             'group_id': NUBLADO_GROUP_ID,
+            'repo_id': NUBLADO_REPO_ID,
             'sudo_list': NUBLADO_SUDO_LIST
         }
     }
