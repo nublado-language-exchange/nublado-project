@@ -23,14 +23,18 @@ GROUP_ID = settings.NUBLADO_GROUP_ID
 REPO_ID = settings.NUBLADO_REPO_ID
 
 
-@restricted_group_member(group_id=GROUP_ID, member_status=CHATMEMBER_CREATOR)
+@restricted_group_member(group_id=GROUP_ID)
 @send_typing_action
 def group_notes(update: Update, context: CallbackContext) -> None:
     group_notes = GroupNote.objects.all()
-    group_notes_list = [f"*- {note.note_tag}*" for note in group_notes]
-    message = _("*Group notes*\n{}").format(
-        "\n".join(group_notes_list)
-    )
+    if len(group_notes) > 0:
+        group_notes_list = [f"*- {note.note_tag}*" for note in group_notes]
+        message = _("*Group notes*\n{}").format(
+            "\n".join(group_notes_list)
+        )
+    else:
+        message = _("There are currently no group notes.")
+
     context.bot.send_message(
         chat_id=update.effective_chat.id,
         text=message
