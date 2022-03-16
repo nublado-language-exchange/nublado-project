@@ -131,7 +131,7 @@ def remove_group_note(update: Update, context: CallbackContext) -> None:
         )
 
 
-@restricted_group_member(group_id=GROUP_ID, member_status=CHATMEMBER_CREATOR)
+@restricted_group_member(group_id=GROUP_ID)
 @send_typing_action
 def get_group_note(update: Update, context: CallbackContext) -> None:
     message = update.message.text
