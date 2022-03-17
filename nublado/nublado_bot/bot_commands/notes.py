@@ -38,7 +38,7 @@ def parse_note_text(message: Message):
 @restricted_group_member(group_id=GROUP_ID)
 @send_typing_action
 def group_notes(update: Update, context: CallbackContext) -> None:
-    group_notes = GroupNote.objects.all()
+    group_notes = GroupNote.objects.order_by('note_tag').all()
     if len(group_notes) > 0:
         group_notes_list = [f"*- {note.note_tag}*" for note in group_notes]
         message = _("*Group notes*\n{}").format(
