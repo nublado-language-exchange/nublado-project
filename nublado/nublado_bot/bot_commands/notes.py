@@ -1,6 +1,6 @@
 import logging
 
-from telegram import Update, Chat
+from telegram import Update, Chat, ParseMode, Message
 from telegram.ext import (
     CallbackContext, MessageHandler, Filters
 )
@@ -23,6 +23,16 @@ GET_GROUP_NOTE_REGEX = '^[' + TAG_CHAR + '][a-zA-Z0-9_-]+$'
 GROUP_ID = settings.NUBLADO_GROUP_ID
 OWNER_ID = settings.NUBLADO_GROUP_OWNER_ID
 REPO_ID = settings.NUBLADO_REPO_ID
+
+
+def parse_note_text(message: Message):
+    message_text = message.text
+    args = message_text.split(None, 2)
+    if len(args) >= 3:
+        note_text = args[2]
+        return note_text
+    else:
+        return None
 
 
 @restricted_group_member(group_id=GROUP_ID)
@@ -77,20 +87,28 @@ def save_group_note(update: Update, context: CallbackContext) -> None:
                 logger.info(e)
         else:
             if len(context.args) > 1:
-                content = " ".join(context.args[1:])
-                obj, created = GroupNote.objects.update_or_create(
-                    note_tag=note_tag,
-                    group_id=GROUP_ID,
-                    defaults={
-                        'message_id': None,
-                        'content': content
-                    }
-                )
-                context.bot.send_message(
-                    chat_id=update.effective_chat.id,
-                    reply_to_message_id=update.message.message_id,
-                    text=saved_message
-                )
+                content = parse_note_text(update.effective_message)
+                if content:
+                    obj, created = GroupNote.objects.update_or_create(
+                        note_tag=note_tag,
+                        group_id=GROUP_ID,
+                        defaults={
+                            'message_id': None,
+                            'content': content
+                        }
+                    )
+                    context.bot.send_message(
+                        chat_id=update.effective_chat.id,
+                        reply_to_message_id=update.message.message_id,
+                        text=saved_message
+                    )
+                else:
+                    message = _("A group note needs content.")
+                    context.bot.send_message(
+                        chat_id=update.effective_chat.id,
+                        reply_to_message_id=update.message.message_id,
+                        text=message
+                    )
             else:
                 message = _("A group note needs content.")
                 context.bot.send_message(
@@ -157,11 +175,14 @@ def get_group_note(update: Update, context: CallbackContext) -> None:
                 group_id=GROUP_ID
             )
             if group_note.content:
-                context.bot.send_message(
-                    chat_id=update.effective_chat.id,
-                    reply_to_message_id=update.message.message_id,
-                    text=group_note.content
-                )
+                try:
+                    context.bot.send_message(
+                        chat_id=update.effective_chat.id,
+                        reply_to_message_id=update.message.message_id,
+                        text=group_note.content
+                    )
+                except TelegramError as e:
+                    logger.info(e)
             elif group_note.message_id:
                 try:
                     # context.bot.forward_message(
