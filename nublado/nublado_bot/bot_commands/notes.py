@@ -1,6 +1,6 @@
 import logging
 
-from telegram import Update, Chat, ParseMode, Message
+from telegram import Update
 from telegram.ext import (
     CallbackContext, MessageHandler, Filters
 )
@@ -12,8 +12,9 @@ from django.utils.translation import gettext as _
 
 from django_telegram.bot_utils.chat_actions import send_typing_action
 from django_telegram.bot_utils.user_status import (
-    restricted_group_member, is_group_chat, get_chat_member
+    restricted_group_member, get_chat_member
 )
+from django_telegram.bot_utils.functions import parse_command_last_arg_text
 from bot_notes.models import GroupNote
 
 logger = logging.getLogger('django')
@@ -23,16 +24,6 @@ GET_GROUP_NOTE_REGEX = '^[' + TAG_CHAR + '][a-zA-Z0-9_-]+$'
 GROUP_ID = settings.NUBLADO_GROUP_ID
 OWNER_ID = settings.NUBLADO_GROUP_OWNER_ID
 REPO_ID = settings.NUBLADO_REPO_ID
-
-
-def parse_note_text(message: Message):
-    message_text = message.text
-    args = message_text.split(None, 2)
-    if len(args) >= 3:
-        note_text = args[2]
-        return note_text
-    else:
-        return None
 
 
 @restricted_group_member(group_id=GROUP_ID)
@@ -87,7 +78,10 @@ def save_group_note(update: Update, context: CallbackContext) -> None:
                 logger.info(e)
         else:
             if len(context.args) > 1:
-                content = parse_note_text(update.effective_message)
+                content = parse_command_last_arg_text(
+                    update.effective_message,
+                    maxsplit=2
+                )
                 if content:
                     obj, created = GroupNote.objects.update_or_create(
                         note_tag=note_tag,
