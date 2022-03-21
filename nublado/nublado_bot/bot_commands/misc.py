@@ -3,11 +3,13 @@ from telegram.ext import CallbackContext
 from telegram.constants import CHATMEMBER_CREATOR
 
 from django.conf import settings
+from django.utils.translation import gettext as _
 
 from django_telegram.bot_utils.chat_actions import send_typing_action
 from django_telegram.bot_utils.user_status import (
     restricted_group_member
 )
+from django_telegram.bot_utils.functions import parse_command_last_arg_text
 
 # To do:Verify that  bot is in group.
 GROUP_ID = settings.NUBLADO_GROUP_ID
@@ -33,20 +35,33 @@ def start(update: Update, context: CallbackContext) -> None:
 @send_typing_action
 def echo(update: Update, context: CallbackContext) -> None:
     """Echo a message to the group."""
-    message = " ".join(context.args)
-    context.bot.send_message(
-        chat_id=GROUP_ID,
-        text=message
-    )
+    if len(context.args) >= 1:
+        message = parse_command_last_arg_text(
+            update.effective_message,
+            maxsplit=1
+        )
+        context.bot.send_message(
+            chat_id=GROUP_ID,
+            text=message
+        )
 
 
 @restricted_group_member(group_id=GROUP_ID, private_chat=False)
 @send_typing_action
 def reverse_text(update: Update, context: CallbackContext) -> None:
     """Reverse the text provided as an argument and display it."""
-    if context.args:
-        message = " ".join(context.args)
+    if len(context.args) >= 1:
+        message = parse_command_last_arg_text(
+            update.effective_message,
+            maxsplit=1
+        )
         context.bot.send_message(
-            chat_id=update.effective_chat.id,
+            chat_id=GROUP_ID,
             text=message[::-1]
+        )
+    else:
+        message = _("The command requires some text to be reversed.")
+        context.bot.send_message(
+            chat_id=GROUP_ID,
+            text=message
         )
