@@ -167,10 +167,11 @@ EN = 'en'
 ES = 'es'
 FREE = 'free'
 MON, TUE, WED, THU, FRI, SAT, SUN = range(7)
+# Note: Do some error-checking on this.
 LANGUAGE_DAY_SCHEDULE = {
-    ES: [],
-    EN: [],
-    FREE: [MON, TUE, WED, THU, FRI, SAT, SUN]
+    ES: [MON, WED],
+    EN: [TUE, THU],
+    FREE: [FRI, SAT, SUN]
 }
 LANGUAGE_DAYS = {
     EN: _("English"),

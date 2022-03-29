@@ -28,7 +28,12 @@ from language_days.functions import set_language_day_locale
 logger = logging.getLogger('django')
 
 GROUP_ID = settings.NUBLADO_GROUP_ID
-WELCOME_MSG = _(
+AGREE_MSG = _("I agree.")
+
+# Callback data
+AGREE_BTN_CALLBACK_DATA = "chat_member_welcome_agree"
+
+welcome_message = _(
     "Welcome to the group, {name}.\n\n" \
     "Please read the following rules and click the \"I agree\" button to participate.\n\n" \
     "*Rules (tentative)*\n" \
@@ -37,10 +42,6 @@ WELCOME_MSG = _(
     "- Don't send private messages to other group members without their permission.\n" \
     "- Be a good example. There are people here learning your language. Help them out with corrections."
 )
-AGREE_MSG = _("I agree.")
-
-# Callback data
-AGREE_BTN_CALLBACK_DATA = "chat_member_welcome_agree"
 
 
 def restrict_chat_member(bot: Bot, user_id: int, chat_id: int):
@@ -113,7 +114,7 @@ def member_join(update: Update, context: CallbackContext) -> None:
         set_language_day_locale()
         for user in update.message.new_chat_members:
             restrict_chat_member(context.bot, user.id, GROUP_ID)
-            message = _(WELCOME_MSG).format(
+            message = _(welcome_message).format(
                 name=user.mention_markdown()
             )
             callback_data = AGREE_BTN_CALLBACK_DATA + " " + str(user.id)
