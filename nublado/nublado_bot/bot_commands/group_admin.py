@@ -43,6 +43,13 @@ welcome_message = _(
     "- Be a good example. There are people here learning your language. Help them out with corrections."
 )
 
+welcome_message_agreed = _(
+    "Welcome to the group, {name}.\n\n" \
+    "We require new members to introduce themselves with a voice message within one day " \
+    "of their joining. Failure to do so will result in your removal from the group.\n\n" \
+    "We look forward to hearing from you."
+)
+
 
 def restrict_chat_member(bot: Bot, user_id: int, chat_id: int):
     try:
@@ -180,6 +187,17 @@ def chat_member_welcome_agree(
             )
         except:
             logger.error("Error tring to delete  welcome message " + welcome_message_id)
+    try:
+        member = bot.get_chat_member(chat_id, user_id)
+        message = _(welcome_message_agreed).format(
+            name=member.user.mention_markdown()
+        )
+        bot.send_message(
+            chat_id=chat_id,
+            text=message
+        )
+    except:
+        pass
 
 
 def welcome_button_handler_c(update: Update, context: CallbackContext) -> None:
