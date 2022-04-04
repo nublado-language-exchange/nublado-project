@@ -15,6 +15,7 @@ from telegram.constants import CHATMEMBER_CREATOR
 from django.conf import settings
 from django.utils.translation import gettext as _
 
+from django_telegram.models import TelegramGroupMember
 from django_telegram.bot_utils.chat_actions import (
     send_typing_action
 )
@@ -28,12 +29,13 @@ from language_days.functions import set_language_day_locale
 logger = logging.getLogger('django')
 
 GROUP_ID = settings.NUBLADO_GROUP_ID
-AGREE_MSG = _("I agree.")
 
 # Callback data
 AGREE_BTN_CALLBACK_DATA = "chat_member_welcome_agree"
 
-welcome_message = _(
+# Translated strings.
+MSG_AGREE = _("I agree.")
+MSG_WELCOME = _(
     "Welcome to the group, {name}.\n\n" \
     "Please read the following rules and click the \"I agree\" button to participate.\n\n" \
     "*Rules (tentative)*\n" \
@@ -42,13 +44,31 @@ welcome_message = _(
     "- Don't send private messages to other group members without their permission.\n" \
     "- Be a good example. There are people here learning your language. Help them out with corrections."
 )
-
-welcome_message_agreed = _(
+MSG_WELCOME_AGREED = _(
     "Welcome to the group, {name}.\n\n" \
     "We require new members to introduce themselves with a voice message within one day " \
     "of their joining. Failure to do so will result in your removal from the group.\n\n" \
     "We look forward to hearing from you."
 )
+
+
+def add_member(user_id, group_id):
+    member_exists = TelegramGroupMember.objects.filter(
+        group_id=group_id,
+        user_id=user_id
+    ).exists()
+    if not member_exists:
+        TelegramGroupMember.objects.create_group_member(
+            group_id=group_id,
+            user_id=user_id
+        )
+
+
+def remove_member(user_id, group_id):
+    TelegramGroupMember.objects.filter(
+        group_id=group_id,
+        user_id=user_id
+    ).delete()
 
 
 def restrict_chat_member(bot: Bot, user_id: int, chat_id: int):
@@ -120,15 +140,18 @@ def member_join(update: Update, context: CallbackContext) -> None:
     if update.message.new_chat_members:
         set_language_day_locale()
         for user in update.message.new_chat_members:
+            # Add user to db
+            add_member(user.id, GROUP_ID)
+            # Mute user until he or she presses the "I agree" button.
             restrict_chat_member(context.bot, user.id, GROUP_ID)
-            message = _(welcome_message).format(
+            message = _(MSG_WELCOME).format(
                 name=user.mention_markdown()
             )
             callback_data = AGREE_BTN_CALLBACK_DATA + " " + str(user.id)
             keyboard = [
                 [
                     InlineKeyboardButton(
-                        _(AGREE_MSG),
+                        _(MSG_AGREE),
                         callback_data=callback_data
                     ),
                 ],
@@ -151,6 +174,9 @@ def member_join(update: Update, context: CallbackContext) -> None:
 
 def member_exit(update: Update, context: CallbackContext) -> None:
     if update.message.left_chat_member:
+        user = update.message.left_chat_member
+        # Delete member from db.
+        remove_member(user.id, GROUP_ID)
         # Delete service message.
         try:
             context.bot.delete_message(
@@ -189,7 +215,7 @@ def chat_member_welcome_agree(
             logger.error("Error tring to delete  welcome message " + welcome_message_id)
     try:
         member = bot.get_chat_member(chat_id, user_id)
-        message = _(welcome_message_agreed).format(
+        message = _(MSG_WELCOME_AGREED).format(
             name=member.user.mention_markdown()
         )
         bot.send_message(
