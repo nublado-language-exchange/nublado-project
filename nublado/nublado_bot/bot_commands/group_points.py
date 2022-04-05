@@ -33,6 +33,28 @@ POINTS_NAME = _("raindrops")
 TOP_POINTS_LIMIT = 10
 GROUP_ID = settings.NUBLADO_GROUP_ID
 
+# Translated messages
+msg_no_give_points_bot = _("You can't give {points_name} to a bot.")
+msg_no_take_points_bot = _("You can't take {points_name} from a bot.")
+msg_no_give_points_self = _("You can't give {points_name} to yourself.")
+msg_no_take_points_self = _("You can't take {points_name} from yourself.")
+msg_give_points = _(
+    "*{sender_name} ({sender_points})* has given some " + \
+    "{points_name} to *{receiver_name} ({receiver_points})*."
+)
+msg_give_point = _(
+    "*{sender_name} ({sender_points})* has given a " + \
+    "{points_name} to *{receiver_name} ({receiver_points})*."
+)
+msg_take_points = _(
+    "*{sender_name} ({sender_points})* has taken some " + \
+    "{points_name} from *{receiver_name} ({receiver_points})*."
+)
+msg_take_point = _(
+    "*{sender_name} ({sender_points})* has taken a " + \
+    "{points_name} from *{receiver_name} ({receiver_points})*."
+)
+
 
 def get_group_member_points(user_id, group_id):
     """Get user's total points in group."""
@@ -98,8 +120,7 @@ def add_points(update: Update, context: CallbackContext) -> None:
             receiver_points.save()
 
             if sender_points.point_increment > 1:
-                message = _("*{sender_name} ({sender_points})* has given some " + \
-                "{points_name} to *{receiver_name} ({receiver_points})*.").format(
+                message = _(msg_give_points).format(
                     sender_name=sender_name,
                     sender_points=sender_points.points,
                     points_name=_(POINTS_NAME),
@@ -107,8 +128,7 @@ def add_points(update: Update, context: CallbackContext) -> None:
                     receiver_points=receiver_points.points
                 )
             else:
-                message = _("*{sender_name} ({sender_points})* has given a " + \
-                "{points_name} to *{receiver_name} ({receiver_points})*.").format(
+                message = _(msg_give_point).format(
                     sender_name=sender_name,
                     sender_points=sender_points.points,
                     points_name=_(POINT_NAME),
@@ -116,11 +136,11 @@ def add_points(update: Update, context: CallbackContext) -> None:
                     receiver_points=receiver_points.points
                 )
         elif receiver.is_bot:
-            message = _("You can't give {points_name} to a bot.").format(
+            message = _(msg_no_give_points_bot).format(
                 points_name=_(POINTS_NAME)
             )
         elif receiver == sender:
-            message = _("You can't give {points_name} to yourself.").format(
+            message = _(msg_no_give_points_self).format(
                 points_name=_(POINTS_NAME)
             )
 
@@ -148,8 +168,7 @@ def remove_points(update: Update, context: CallbackContext) -> None:
             receiver_points.save()
 
             if sender_points.point_increment > 1:
-                message = _("*{sender_name} ({sender_points})* has taken some " + \
-                "{points_name} from *{receiver_name} ({receiver_points})*.").format(
+                message = _(msg_take_points).format(
                     sender_name=sender_name,
                     sender_points=sender_points.points,
                     points_name=_(POINTS_NAME),
@@ -157,8 +176,7 @@ def remove_points(update: Update, context: CallbackContext) -> None:
                     receiver_points=receiver_points.points
                 )
             else:
-                message = _("*{sender_name} ({sender_points})* has taken a " + \
-                "{points_name} from *{receiver_name} ({receiver_points})*.").format(
+                message = _(msg_take_point).format(
                     sender_name=sender_name,
                     sender_points=sender_points.points,
                     points_name=_(POINT_NAME),
@@ -166,11 +184,11 @@ def remove_points(update: Update, context: CallbackContext) -> None:
                     receiver_points=receiver_points.points
                 )
         elif receiver.is_bot:
-            message = _("You can't take {points_name} from a bot.").format(
+            message = _(msg_no_take_points_bot).format(
                 points_name=_(POINTS_NAME)
             )
         elif receiver == sender:
-            message = _("You can't take {points_name} from yourself.").format(
+            message = _(msg_no_take_points_self).format(
                 points_name=_(POINTS_NAME)
             )        
         context.bot.send_message(

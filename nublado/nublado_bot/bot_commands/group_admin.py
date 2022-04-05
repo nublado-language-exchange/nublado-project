@@ -34,8 +34,8 @@ GROUP_ID = settings.NUBLADO_GROUP_ID
 AGREE_BTN_CALLBACK_DATA = "chat_member_welcome_agree"
 
 # Translated strings.
-MSG_AGREE = _("I agree.")
-MSG_WELCOME = _(
+msg_agree = _("I agree.")
+msg_welcome = _(
     "Welcome to the group, {name}.\n\n" \
     "Please read the following rules and click the \"I agree\" button to participate.\n\n" \
     "*Rules (tentative)*\n" \
@@ -44,7 +44,7 @@ MSG_WELCOME = _(
     "- Don't send private messages to other group members without their permission.\n" \
     "- Be a good example. There are people here learning your language. Help them out with corrections."
 )
-MSG_WELCOME_AGREED = _(
+msg_welcome_agreed = _(
     "Welcome to the group, {name}.\n\n" \
     "We require new members to introduce themselves with a voice message within one day " \
     "of their joining. Failure to do so will result in your removal from the group.\n\n" \
@@ -144,19 +144,19 @@ def member_join(update: Update, context: CallbackContext) -> None:
             add_member(user.id, GROUP_ID)
             # Mute user until he or she presses the "I agree" button.
             restrict_chat_member(context.bot, user.id, GROUP_ID)
-            message = _(MSG_WELCOME).format(
-                name=user.mention_markdown()
-            )
             callback_data = AGREE_BTN_CALLBACK_DATA + " " + str(user.id)
             keyboard = [
                 [
                     InlineKeyboardButton(
-                        _(MSG_AGREE),
+                        _(msg_agree),
                         callback_data=callback_data
                     ),
                 ],
             ]
             reply_markup = InlineKeyboardMarkup(keyboard)
+            message = _(msg_welcome).format(
+                name=user.mention_markdown()
+            )
             context.bot.send_message(
                 text=message,
                 chat_id=GROUP_ID,
@@ -215,7 +215,7 @@ def chat_member_welcome_agree(
             logger.error("Error tring to delete  welcome message " + welcome_message_id)
     try:
         member = bot.get_chat_member(chat_id, user_id)
-        message = _(MSG_WELCOME_AGREED).format(
+        message = _(msg_welcome_agreed).format(
             name=member.user.mention_markdown()
         )
         bot.send_message(
