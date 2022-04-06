@@ -56,6 +56,7 @@ msg_take_point = _(
 )
 
 
+# Command handlers 
 def get_group_member_points(user_id, group_id):
     """Get user's total points in group."""
     group_member, group_member_created = TelegramGroupMember.objects.get_or_create(
@@ -197,14 +198,14 @@ def remove_points(update: Update, context: CallbackContext) -> None:
         )
 
 
-# Handlers to listen for triggers to add or remove points.
+# Message handlers to listen for triggers to add or remove points.
 add_points_handler = MessageHandler(
-    Filters.regex(ADD_POINTS_REGEX),
+    (Filters.regex(ADD_POINTS_REGEX) & Filters.reply),
     add_points
 )
 
 
 remove_points_handler = MessageHandler(
-    Filters.regex(REMOVE_POINTS_REGEX),
+    (Filters.regex(REMOVE_POINTS_REGEX) & Filters.reply),
     remove_points
 )
