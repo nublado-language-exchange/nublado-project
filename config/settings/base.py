@@ -193,7 +193,6 @@ WEEKDAYS_ABBR = [
     _("Fri."), _("Sat."), _("Sun.")
 ]
 
-
 # Telegram bot stuff
 BOT_MODE_WEBHOOK = "webhook"
 BOT_MODE_POLLING = "polling"
@@ -207,17 +206,13 @@ NUBLADO_REPO_ID = int(get_env_variable('NUBLADO_REPO_ID'))
 NUBLADO_GROUP_OWNER_ID = int(get_env_variable('NUBLADO_GROUP_OWNER_ID'))
 NUBLADO_SUDO_LIST = [NUBLADO_GROUP_OWNER_ID, ]
 
-BOT_TOKENS = {
-    NUBLADO_BOT: NUBLADO_BOT_TOKEN
-}
-
 DJANGO_TELEGRAM = {
     'mode': BOT_MODE_WEBHOOK,
     'webhook_port': int(os.environ.get('PORT', 5000)),
     'webhook_site' : "https://nubladoproject.herokuapp.com",
 	'webhook_path' : "bot/webhook",
     'bots': {
-        NUBLADO_BOT_TOKEN: {
+        NUBLADO_BOT: {
             'token': NUBLADO_BOT_TOKEN,
             'group_id': NUBLADO_GROUP_ID,
             'repo_id': NUBLADO_REPO_ID,
