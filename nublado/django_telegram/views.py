@@ -41,6 +41,6 @@ class BotWebhookView(View):
                 ))
                 bot.dispatcher.dispatch_error(update, te)
 
-            return JsonResponse(update)
+            return JsonResponse({})
         else:
             raise Http404
