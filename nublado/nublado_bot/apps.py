@@ -54,12 +54,12 @@ class NubladoBotConfig(AppConfig):
         bot.add_command_handler('schedule', schedule)
         bot.add_command_handler('language_day', language_day)
         bot.add_command_handler('initiate_language_day', initiate_language_day)
-        bot.schedule_daily_task(
-            initiate_language_day_c,
-            hour=settings.LANGUAGE_DAY_HOUR_CHANGE,
-            minute=settings.LANGUAGE_DAY_MINUTE_CHANGE,
-            name="Initiate language day"         
-        )
+        # bot.schedule_daily_task(
+        #     initiate_language_day_c,
+        #     hour=settings.LANGUAGE_DAY_HOUR_CHANGE,
+        #     minute=settings.LANGUAGE_DAY_MINUTE_CHANGE,
+        #     name="Initiate language day"         
+        # )
         # group_points
         bot.add_handler(add_points_handler)
         bot.add_handler(remove_points_handler)

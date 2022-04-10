@@ -18,30 +18,28 @@ class BotWebhookView(View):
         bot = DjangoTelegramConfig.registry.get_bot(token)
 
         if bot is not None:
-            telegram_bot = bot.telegram_bot
-            dispatcher = bot.dispatcher
-
             try:
                 data = json.loads(request.body.decode('utf-8'))
             except:
                 logger.warn("Telegram bot <{}> invalid request : {}".format(
-                    telegram_bot.username,
+                    bot.telegram_bot.username,
                     repr(request))
                 )
                 raise Http404
 
             try:
                 update = Update.de_json(data, telegram_bot)
-                dispatcher.process_update(update)
+                bot.update_queue.put(update)
+                # bot.dispatcher.process_update(update)
                 logger.debug("Bot <{}> : Processed update {}".format(
-                    telegram_bot.username,
+                    bot.telegram_bot.username,
                     update
                 ))
             except TelegramError as te:
                 logger.warn("Bot <{}> : Error was raised while processing Update.".format(
-                    telegram_bot.username
+                    bot.telegram_bot.username
                 ))
-                dispatcher.dispatch_error(update, te)
+                bot.dispatcher.dispatch_error(update, te)
 
             return JsonResponse()
         else:
