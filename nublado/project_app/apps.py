@@ -10,7 +10,6 @@ class ProjectAppConfig(AppConfig):
     name = "project_app"
 
     def ready(self):
-        pass
         # from django_telegram.apps import DjangoTelegramConfig
         # try:
         #     bot_token = settings.DJANGO_TELEGRAM['bots'][settings.NUBLADO_BOT]['token']
@@ -20,3 +19,4 @@ class ProjectAppConfig(AppConfig):
         # except:
         #     error = "Bot {} doesn't exist or is improperly configured.".format(settings.NUBLADO_BOT)
         #     logger.error(error)
+        pass
