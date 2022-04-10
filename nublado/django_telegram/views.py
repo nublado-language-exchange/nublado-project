@@ -14,6 +14,7 @@ logger = logging.getLogger('django')
 
 class BotWebhookView(View):
     def post(self, request, *args, **kwargs):
+        logger.info(request)
         token = request.kwargs['token']
         bot = DjangoTelegramConfig.registry.get_bot(token)
 
