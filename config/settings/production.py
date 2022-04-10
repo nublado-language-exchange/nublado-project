@@ -6,6 +6,7 @@ from .base import *
 PROJECT_DOMAIN = "https://nubladoproject.herokuapp.com"
 
 DEBUG = True
+MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
 
 ALLOWED_HOSTS = ['*']
 
