@@ -36,8 +36,9 @@ class Bot(object):
             self.job_queue = self.updater.job_queue
             self.dispatcher = self.updater.dispatcher
         elif dt['mode'] == settings.BOT_MODE_WEBHOOK:
-            self.update_queue = Queue()
-            self.dispatcher = Dispatcher(self.telegram_bot, self.update_queue)
+            # self.update_queue = Queue()
+            # self.dispatcher = Dispatcher(self.telegram_bot, self.update_queue)
+            self.dispatcher = Dispatcher(self.telegram_bot, None, workers=0)
 
     def start(self):
         dt = settings.DJANGO_TELEGRAM
@@ -47,8 +48,8 @@ class Bot(object):
             self.updater.idle()
         elif dt['mode'] == settings.BOT_MODE_WEBHOOK:
             logger.info("Bot mode: webhooks")
-            thread = Thread(target=self.dispatcher.start, name='dispatcher')
-            thread.start()
+            # thread = Thread(target=self.dispatcher.start, name='dispatcher')
+            # thread.start()
             # webhook_site = remove_lead_and_trail_slash(dt['webhook_site'])
             # webhook_path = remove_lead_and_trail_slash(dt['webhook_path'])
             # url_path = f"{webhook_path}/{self.token)
