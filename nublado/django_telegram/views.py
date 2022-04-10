@@ -20,6 +20,7 @@ class BotWebhookView(View):
         if bot is not None:
             try:
                 data = json.loads(request.body.decode('utf-8'))
+                logger.info(data)
             except:
                 logger.warn("Telegram bot <{}> invalid request : {}".format(
                     bot.telegram_bot.username,
