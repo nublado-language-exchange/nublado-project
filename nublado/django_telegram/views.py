@@ -14,9 +14,6 @@ logger = logging.getLogger('django')
 
 class BotWebhookView(View):
     def post(self, request, *args, **kwargs):
-        logger.info(request)
-        logger.info(kwargs)
-        logger.info(request.POST)
         token = kwargs['token']
         bot = DjangoTelegramConfig.bot_registry.get_bot(token)
 
@@ -44,6 +41,6 @@ class BotWebhookView(View):
                 ))
                 bot.dispatcher.dispatch_error(update, te)
 
-            return JsonResponse()
+            return JsonResponse(update)
         else:
             raise Http404
