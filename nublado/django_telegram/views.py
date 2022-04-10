@@ -17,7 +17,7 @@ class BotWebhookView(View):
         logger.info(request)
         logger.info(kwargs)
         logger.info(request.POST)
-        token = request.kwargs['token']
+        token = request.POST['token']
         bot = DjangoTelegramConfig.registry.get_bot(token)
 
         if bot is not None:
