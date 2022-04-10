@@ -2,3 +2,4 @@
 django-heroku
 dj-database-url
 django-postgrespool
+django-debug-toolbar==3.2.2
