@@ -5,7 +5,7 @@ from .base import *
 
 PROJECT_DOMAIN = "https://nubladoproject.herokuapp.com"
 
-DEBUG = False
+DEBUG = Treue
 
 ALLOWED_HOSTS = ['*']
 
