@@ -28,9 +28,9 @@ class BotWebhookView(View):
                 raise Http404
 
             try:
-                update = Update.de_json(data, telegram_bot)
-                # bot.update_queue.put(update)
-                bot.dispatcher.process_update(update)
+                update = Update.de_json(data, bot.telegram_bot)
+                bot.dispatcher.update_queue.put(update)
+                # bot.dispatcher.process_update(update)
                 logger.debug("Bot <{}> : Processed update {}".format(
                     bot.telegram_bot.username,
                     update

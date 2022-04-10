@@ -36,10 +36,9 @@ class Bot(object):
             self.job_queue = self.updater.job_queue
             self.dispatcher = self.updater.dispatcher
         elif dt['mode'] == settings.BOT_MODE_WEBHOOK:
-            # self.update_queue = Queue()
-            # self.dispatcher = Dispatcher(self.telegram_bot, self.update_queue)
-            self.dispatcher = Dispatcher(self.telegram_bot, None)
-
+            update_queue = Queue()
+            self.dispatcher = Dispatcher(self.telegram_bot, update_queue)
+            self.update_queue = self.dispatcher.update_queue
     def start(self):
         dt = settings.DJANGO_TELEGRAM
         if dt['mode'] == settings.BOT_MODE_POLLING:
