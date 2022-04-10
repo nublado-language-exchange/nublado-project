@@ -48,13 +48,14 @@ class Bot(object):
             self.updater.idle()
         elif dt['mode'] == settings.BOT_MODE_WEBHOOK:
             logger.info("Bot mode: webhooks")
+
+            webhook_site = remove_lead_and_trail_slash(dt['webhook_site'])
+            webhook_path = remove_lead_and_trail_slash(dt['webhook_path'])
+            url_path = f"{webhook_path}/{self.token}"
+            webhook_url = f"{webhook_site}/{url_path}"
+            self.telegram_bot.set_webhook(webhook_url)
             thread = Thread(target=self.dispatcher.start, name='dispatcher')
             thread.start()
-            # webhook_site = remove_lead_and_trail_slash(dt['webhook_site'])
-            # webhook_path = remove_lead_and_trail_slash(dt['webhook_path'])
-            # url_path = f"{webhook_path}/{self.token)
-            # webhook_url = f"{webhook_site}/{url_path}"
-
             # self.updater.start_webhook(
             #     listen="0.0.0.0",
             #     port=dt['webhook_port'],
