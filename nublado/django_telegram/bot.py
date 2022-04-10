@@ -1,13 +1,11 @@
 import os
 import datetime
 import pytz
-from queue import Queue
-from threading import Thread
 import logging
 
 from core.utils import remove_lead_and_trail_slash
-from telegram import Bot as TelegramBot, ParseMode, Update
-from telegram.ext import Defaults, Updater, CommandHandler, Dispatcher
+from telegram import ParseMode, Update
+from telegram.ext import Defaults, ExtBot as TelegramBot, Updater, CommandHandler, Dispatcher
 
 from django.conf import settings
 from django.utils import timezone
@@ -19,8 +17,11 @@ logger = logging.getLogger('django')
 class Bot(object):
     def __init__(self, token: str):
         self.token = token
-        self.telegram_bot = TelegramBot(self.token)
         defaults = Defaults(parse_mode=ParseMode.MARKDOWN)
+        self.telegram_bot = TelegramBot(
+            self.token,
+            defaults=defaults
+        )
         self.updater = None
         self.dispatcher = None
         self.update_queue = None
@@ -30,16 +31,19 @@ class Bot(object):
         if dt['mode'] == settings.BOT_MODE_POLLING:
             self.updater = Updater(
                 self.token,
-                use_context=True,
-                defaults=defaults
+                use_context=True
             )
             self.job_queue = self.updater.job_queue
             self.dispatcher = self.updater.dispatcher
         elif dt['mode'] == settings.BOT_MODE_WEBHOOK:
-            # update_queue = Queue()
-            # self.dispatcher = Dispatcher(self.telegram_bot, update_queue)
             self.dispatcher = Dispatcher(self.telegram_bot, None)
-            # self.update_queue = self.dispatcher.update_queue
+        else:
+            error_msg = "Bot mode must be in {} mode or {} mode.".format(
+                settings.BOT_MODE_POLLING,
+                settings.BOT_MODE_WEBHOOK
+            )
+            logger.error(error_msg)
+            raise ImproperlyConfigured(error_msg)
 
     def start(self):
         dt = settings.DJANGO_TELEGRAM
@@ -49,21 +53,11 @@ class Bot(object):
             self.updater.idle()
         elif dt['mode'] == settings.BOT_MODE_WEBHOOK:
             logger.info("Bot mode: webhooks")
-
             webhook_site = remove_lead_and_trail_slash(dt['webhook_site'])
             webhook_path = remove_lead_and_trail_slash(dt['webhook_path'])
             url_path = f"{webhook_path}/{self.token}"
             webhook_url = f"{webhook_site}/{url_path}/"
             self.telegram_bot.set_webhook(webhook_url)
-            #thread = Thread(target=self.dispatcher.start, name='dispatcher')
-            #thread.start()
-            # self.updater.start_webhook(
-            #     listen="0.0.0.0",
-            #     port=dt['webhook_port'],
-            #     url_path=url_path,
-            #     webhook_url = webhook_url
-            # )
-            # self.updater.idle()
         else:
             error_msg = "Bot mode must be in {} mode or {} mode.".format(
                 settings.BOT_MODE_POLLING,

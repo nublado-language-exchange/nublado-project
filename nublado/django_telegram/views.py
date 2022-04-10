@@ -20,7 +20,6 @@ class BotWebhookView(View):
         if bot is not None:
             try:
                 data = json.loads(request.body.decode('utf-8'))
-                logger.info(data)
             except:
                 logger.warn("Telegram bot <{}> invalid request : {}".format(
                     bot.telegram_bot.username,
@@ -30,7 +29,6 @@ class BotWebhookView(View):
 
             try:
                 update = Update.de_json(data, bot.telegram_bot)
-                # bot.dispatcher.update_queue.put(update)
                 bot.dispatcher.process_update(update)
                 logger.debug("Bot <{}> : Processed update {}".format(
                     bot.telegram_bot.username,
