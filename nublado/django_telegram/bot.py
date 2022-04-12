@@ -1,8 +1,6 @@
 import os
 import datetime
 import pytz
-from queue import Queue
-from threading import Thread
 import logging
 
 from core.utils import remove_lead_and_trail_slash
@@ -27,7 +25,7 @@ class Bot(object):
         self.updater = None
         self.dispatcher = None
         self.job_queue = None
-        self.update_queue = None
+
         dt = settings.DJANGO_TELEGRAM
         if dt['mode'] == settings.BOT_MODE_POLLING:
             self.updater = Updater(
@@ -37,9 +35,7 @@ class Bot(object):
             self.job_queue = self.updater.job_queue
             self.dispatcher = self.updater.dispatcher
         elif dt['mode'] == settings.BOT_MODE_WEBHOOK:
-            # self.dispatcher = Dispatcher(self.telegram_bot, None)
-            self.update_queue = Queue()
-            self.dispatcher = Dispatcher(self.telegram_bot, self.update_queue)
+            self.dispatcher = Dispatcher(self.telegram_bot, None)
         else:
             error_msg = "Bot mode must be in {} mode or {} mode.".format(
                 settings.BOT_MODE_POLLING,
@@ -60,9 +56,6 @@ class Bot(object):
             webhook_path = remove_lead_and_trail_slash(dt['webhook_path'])
             webhook_url = f"{webhook_site}/{webhook_path}/{self.token}/"
             self.telegram_bot.set_webhook(webhook_url)
-
-            thread = Thread(target=self.dispatcher.start, name='dispatcher')
-            thread.start()
         else:
             error_msg = "Bot mode must be in {} mode or {} mode.".format(
                 settings.BOT_MODE_POLLING,
