@@ -24,7 +24,6 @@ class Bot(object):
         )
         self.updater = None
         self.dispatcher = None
-        self.update_queue = None
         self.job_queue = None
 
         dt = settings.DJANGO_TELEGRAM
@@ -55,8 +54,7 @@ class Bot(object):
             logger.info("Bot mode: webhooks")
             webhook_site = remove_lead_and_trail_slash(dt['webhook_site'])
             webhook_path = remove_lead_and_trail_slash(dt['webhook_path'])
-            url_path = f"{webhook_path}/{self.token}"
-            webhook_url = f"{webhook_site}/{url_path}/"
+            webhook_url = f"{webhook_site}/{webhook_path}/{self.token}/"
             self.telegram_bot.set_webhook(webhook_url)
         else:
             error_msg = "Bot mode must be in {} mode or {} mode.".format(

@@ -1,10 +1,9 @@
 import logging
 
-from telegram import Update, Chat
+from telegram import Update
 from telegram.ext import (
     CallbackContext, MessageHandler, Filters
 )
-from telegram.constants import CHAT_SUPERGROUP
 
 from django.conf import settings
 from django.utils.translation import gettext as _

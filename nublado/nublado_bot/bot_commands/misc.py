@@ -1,3 +1,5 @@
+import logging
+
 from telegram import Update
 from telegram.ext import CallbackContext
 from telegram.constants import CHATMEMBER_CREATOR
@@ -10,6 +12,8 @@ from django_telegram.bot_utils.user_status import (
     restricted_group_member
 )
 from django_telegram.bot_utils.functions import parse_command_last_arg_text
+
+logger = logging.getLogger('django')
 
 # To do:Verify that  bot is in group.
 GROUP_ID = settings.NUBLADO_GROUP_ID
@@ -50,6 +54,7 @@ def echo(update: Update, context: CallbackContext) -> None:
 @send_typing_action
 def reverse_text(update: Update, context: CallbackContext) -> None:
     """Reverse the text provided as an argument and display it."""
+    logger.info(context.bot.id)
     if len(context.args) >= 1:
         message = parse_command_last_arg_text(
             update.effective_message,
