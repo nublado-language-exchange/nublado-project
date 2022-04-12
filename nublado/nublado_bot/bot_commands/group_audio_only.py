@@ -44,59 +44,10 @@ def get_dispatcher(bot_token: int):
 @restricted_group_member(group_id=GROUP_ID, member_status=CHATMEMBER_CREATOR)
 def audio_only(update: Update, context: CallbackContext):
     if len(context.args) >= 1:
-        dispatcher = get_dispatcher(settings.NUBLADO_BOT_TOKEN)
         if context.args[0] == AUDIO_ONLY_ON:
-            try:
-                logger.info(audio_only_handler)
-                if HANDLER_GROUP in dispatcher.handlers.keys():
-                    handlers = dispatcher.handlers[HANDLER_GROUP]
-                    if audio_only_handler in handlers:
-                        context.bot.send_message(
-                            chat_id=GROUP_ID,
-                            text=msg_audio_only_already_activated
-                        )
-                    else:
-                        dispatcher.add_handler(audio_only_handler, HANDLER_GROUP)
-                        logger.info(dispatcher.handlers)
-                        context.bot.send_message(
-                            chat_id=GROUP_ID,
-                            text=msg_audio_only_activated
-                        )
-                else:
-                    logger.info("Key not found.")
-                    dispatcher.add_handler(audio_only_handler, HANDLER_GROUP)
-                    context.bot.send_message(
-                        chat_id=GROUP_ID,
-                        text=msg_audio_only_activated
-                    )
-                    logger.info(dispatcher.handlers)
-            except:
-                logger.error("Error adding audio-only handler.")
+            pass
         elif context.args[0] == AUDIO_ONLY_OFF:
-            try:
-                logger.info(audio_only_handler)
-                if HANDLER_GROUP in dispatcher.handlers.keys():
-                    handlers = dispatcher.handlers[HANDLER_GROUP]
-                    logger.info(handlers)
-                    if audio_only_handler in handlers:
-                        dispatcher.remove_handler(audio_only_handler, HANDLER_GROUP)
-                        logger.info(dispatcher.handlers)
-                        context.bot.send_message(
-                            chat_id=GROUP_ID,
-                            text=msg_audio_only_deactivated
-                        ) 
-                    else:
-                        context.bot.send_message(
-                            chat_id=GROUP_ID,
-                            text=msg_audio_only_not_activated
-                        )
-                else:
-                    context.bot.send_message(
-                        chat_id=GROUP_ID,
-                        text=msg_audio_only_not_activated
-                    )
-            except:
-                logger.error("Error removing audio-only handler.")
+            pass
         else:
             pass
 

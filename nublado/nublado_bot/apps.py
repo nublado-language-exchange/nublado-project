@@ -37,7 +37,7 @@ class NubladoBotConfig(AppConfig):
             get_group_note_handler
         )
         from .bot_commands.group_audio_only import (
-            audio_only
+            audio_only, audio_only_handler
         )
 
         bot_registry = DjangoTelegramConfig.bot_registry
@@ -73,7 +73,8 @@ class NubladoBotConfig(AppConfig):
         bot.add_command_handler('remove_group_note', remove_group_note)
         bot.add_handler(get_group_note_handler, handler_group=2)
         # audio only
-        # bot.add_command_handler('audio_only', audio_only)
+        bot.add_command_handler('audio_only', audio_only)
+        bot.add_handler(audio_only_handler, handler_group=1)
         # Add the bot to the registry.
         bot_registry.add_bot(NubladoBotConfig.bot_key, bot)
 
