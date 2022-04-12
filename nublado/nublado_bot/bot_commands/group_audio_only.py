@@ -9,6 +9,7 @@ from telegram.ext import (
 from django.conf import settings
 from django.utils.translation import gettext as _
 
+from django_telegram.apps import DjangoTelegramConfig
 from django_telegram.bot_utils.chat_actions import (
     send_typing_action
 )
@@ -30,11 +31,19 @@ msg_audio_only_deactivated = _("Audio-only mode has been deactivated.")
 msg_audio_only_not_activated = _("Audio-only mode is not activated.")
 
 
+def get_dispatcher(bot_token: int):
+    bot = DjangoTelegramConfig.bot_registry.get_bot(bot_token)
+    if bot:
+        return bot.dispatcher
+    else:
+        return None
+
+
 @send_typing_action
 @restricted_group_member(group_id=GROUP_ID, member_status=CHATMEMBER_CREATOR)
 def audio_only(update: Update, context: CallbackContext):
     if len(context.args) >= 1:
-        dispatcher = context.dispatcher
+        dispatcher = get_dispatcher(settings.NUBLADO_BOT_TOKEN)
         if context.args[0] == AUDIO_ONLY_ON:
             try:
                 handlers = dispatcher.handlers[0]

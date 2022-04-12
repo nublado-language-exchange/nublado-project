@@ -54,7 +54,6 @@ def echo(update: Update, context: CallbackContext) -> None:
 @send_typing_action
 def reverse_text(update: Update, context: CallbackContext) -> None:
     """Reverse the text provided as an argument and display it."""
-    logger.info(context.bot.id)
     if len(context.args) >= 1:
         message = parse_command_last_arg_text(
             update.effective_message,
