@@ -81,7 +81,6 @@ def audio_only(update: Update, context: CallbackContext):
                     if audio_only_handler in handlers:
                         dispatcher.remove_handler(audio_only_handler, HANDLER_GROUP)
                         logger.info(dispatcher.handlers)
-                        logger.info(dispatcher.handlers)
                         context.bot.send_message(
                             chat_id=GROUP_ID,
                             text=msg_audio_only_deactivated
