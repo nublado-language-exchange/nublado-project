@@ -44,9 +44,9 @@ def get_dispatcher(bot_token: int):
 def audio_only(update: Update, context: CallbackContext):
     if len(context.args) >= 1:
         dispatcher = get_dispatcher(settings.NUBLADO_BOT_TOKEN)
+        logger.info(dispatcher)
         if context.args[0] == AUDIO_ONLY_ON:
             try:
-                logger.info(dispatcher.handlers)
                 handlers = dispatcher.handlers[0]
                 if audio_only_handler in handlers:
                     context.bot.send_message(
@@ -63,7 +63,6 @@ def audio_only(update: Update, context: CallbackContext):
                 logger.error("Error adding audio-only handler.")
         elif context.args[0] == AUDIO_ONLY_OFF:
             try:
-                logger.info(dispatcher.handlers)
                 handlers = dispatcher.handlers[0]
                 if audio_only_handler in handlers:
                     dispatcher.remove_handler(audio_only_handler)
