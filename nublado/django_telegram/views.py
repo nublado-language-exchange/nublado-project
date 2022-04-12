@@ -29,7 +29,9 @@ class BotWebhookView(View):
 
             try:
                 update = Update.de_json(data, bot.telegram_bot)
-                bot.dispatcher.process_update(update)
+                # bot.dispatcher.process_update(update)
+                bot.update_queue.put(update)
+
                 logger.debug("Bot <{}> : Processed update {}".format(
                     bot.telegram_bot.username,
                     update
