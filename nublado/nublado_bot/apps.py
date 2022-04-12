@@ -64,16 +64,16 @@ class NubladoBotConfig(AppConfig):
         #     name="Initiate language day"         
         # )
         # group_points
-        bot.add_handler(add_points_handler)
-        bot.add_handler(remove_points_handler)
+        bot.add_handler(add_points_handler, handler_group=2)
+        bot.add_handler(remove_points_handler, handler_group=2)
         bot.add_command_handler('top_points', group_top_points)
         # notes
         bot.add_command_handler('group_notes', group_notes)
         bot.add_command_handler('save_group_note', save_group_note)
         bot.add_command_handler('remove_group_note', remove_group_note)
-        bot.add_handler(get_group_note_handler)
+        bot.add_handler(get_group_note_handler, handler_group=2)
         # audio only
-        # bot.add_command_handler('audio_only', audio_only)
+        bot.add_command_handler('audio_only', audio_only)
         # Add the bot to the registry.
         bot_registry.add_bot(NubladoBotConfig.bot_key, bot)
 

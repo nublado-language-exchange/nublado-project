@@ -64,12 +64,21 @@ class Bot(object):
             logger.error(error_msg)
             raise ImproperlyConfigured(error_msg)
 
-    def add_handler(self, handler):
-        self.dispatcher.add_handler(handler)
+    def add_handler(self, handler, handler_group: int = 0):
+        try:
+            self.dispatcher.add_handler(handler, group=handler_group)
+        except:
+            logger.error(f"Error adding handler {handler}")
 
-    def add_command_handler(self, command: str, func):
+    def remove_handler(self, handler, handler_group:int = 0):
+        try:
+            self.dispatcher.remove_handler(handler, group=handler_group)
+        except:
+            logger.error(f"Error removing handler {handler}")
+
+    def add_command_handler(self, command: str, func, handler_group: int = 0):
         handler = CommandHandler(command, func)
-        self.add_handler(handler)
+        self.add_handler(handler, handler_group)
 
     # def schedule_daily_task(
     #     self,
