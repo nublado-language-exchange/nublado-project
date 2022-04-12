@@ -45,13 +45,11 @@ def get_dispatcher(bot_token: int):
 def audio_only(update: Update, context: CallbackContext):
     if len(context.args) >= 1:
         dispatcher = get_dispatcher(settings.NUBLADO_BOT_TOKEN)
-        logger.info(dispatcher.handlers)
         if context.args[0] == AUDIO_ONLY_ON:
             try:
                 logger.info(audio_only_handler)
                 if HANDLER_GROUP in dispatcher.handlers.keys():
                     handlers = dispatcher.handlers[HANDLER_GROUP]
-                    logger.info(handlers)
                     if audio_only_handler in handlers:
                         context.bot.send_message(
                             chat_id=GROUP_ID,
@@ -59,18 +57,19 @@ def audio_only(update: Update, context: CallbackContext):
                         )
                     else:
                         dispatcher.add_handler(audio_only_handler, HANDLER_GROUP)
+                        logger.info(dispatcher.handlers)
                         context.bot.send_message(
                             chat_id=GROUP_ID,
                             text=msg_audio_only_activated
                         )
                 else:
                     logger.info("Key not found.")
-                    logger.info(dispatcher.handlers)
                     dispatcher.add_handler(audio_only_handler, HANDLER_GROUP)
                     context.bot.send_message(
                         chat_id=GROUP_ID,
                         text=msg_audio_only_activated
-                    ) 
+                    )
+                    logger.info(dispatcher.handlers)
             except:
                 logger.error("Error adding audio-only handler.")
         elif context.args[0] == AUDIO_ONLY_OFF:
@@ -81,6 +80,7 @@ def audio_only(update: Update, context: CallbackContext):
                     logger.info(handlers)
                     if audio_only_handler in handlers:
                         dispatcher.remove_handler(audio_only_handler, HANDLER_GROUP)
+                        logger.info(dispatcher.handlers)
                         logger.info(dispatcher.handlers)
                         context.bot.send_message(
                             chat_id=GROUP_ID,
