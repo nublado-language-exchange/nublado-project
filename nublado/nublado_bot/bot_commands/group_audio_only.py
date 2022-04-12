@@ -64,6 +64,8 @@ def audio_only(update: Update, context: CallbackContext):
                             text=msg_audio_only_activated
                         )
                 else:
+                    logger.info("Key not found.")
+                    logger.info(dispatcher.handlers)
                     dispatcher.add_handler(audio_only_handler, HANDLER_GROUP)
                     context.bot.send_message(
                         chat_id=GROUP_ID,
@@ -79,6 +81,7 @@ def audio_only(update: Update, context: CallbackContext):
                     logger.info(handlers)
                     if audio_only_handler in handlers:
                         dispatcher.remove_handler(audio_only_handler, HANDLER_GROUP)
+                        logger.info(dispatcher.handlers)
                         context.bot.send_message(
                             chat_id=GROUP_ID,
                             text=msg_audio_only_deactivated
