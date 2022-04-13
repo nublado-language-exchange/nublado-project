@@ -43,6 +43,8 @@ class Bot(object):
             )
             logger.error(error_msg)
             raise ImproperlyConfigured(error_msg)
+        # options
+        self.audio_only = False
 
     def start(self):
         dt = settings.DJANGO_TELEGRAM

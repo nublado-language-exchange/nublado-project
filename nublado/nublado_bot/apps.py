@@ -46,7 +46,7 @@ class NubladoBotConfig(AppConfig):
         # Register handlers
         # audio only
         bot.add_command_handler('audio_only', audio_only)
-        # bot.add_handler(audio_only_handler, handler_group=1)
+        bot.add_handler(audio_only_handler, handler_group=1)
         # group_admin
         bot.add_command_handler('update_group_members', update_group_members)
         bot.add_handler(member_join_handler, handler_group=2)

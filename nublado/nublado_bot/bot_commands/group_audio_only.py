@@ -31,53 +31,51 @@ msg_audio_only_already_activated = _("Audio-only mode is already activated.")
 msg_audio_only_deactivated = _("Audio-only mode has been deactivated.")
 msg_audio_only_not_activated = _("Audio-only mode is not activated.")
 
+nublado_bot = None
 
 @send_typing_action
 @restricted_group_member(group_id=GROUP_ID, member_status=CHATMEMBER_CREATOR)
 def audio_only(update: Update, context: CallbackContext):
     if len(context.args) >= 1:
-        logger.info("SHIT")
-        dispatcher = context.dispatcher
-        logger.info(dispatcher)
-        if context.args[0] == AUDIO_ONLY_ON:
-            dispatcher.add_handler(audio_only_handler, HANDLER_GROUP)
-            context.bot.send_message(
-                chat_id=update.effective_chat.id,
-                text=msg_audio_only_activated
-            )
-        elif context.args[0] == AUDIO_ONLY_OFF:
-            try:
-                dispatcher.remove_handler(audio_only_handler, HANDLER_GROUP)
+        global nublado_bot
+        nublado_bot = DjangoTelegramConfig.bot_registry.get_bot(settings.NUBLADO_BOT_TOKEN)
+        if nublado_bot:
+            if context.args[0] == AUDIO_ONLY_ON:
+                nublado_bot.audio_only = True
+                context.bot.send_message(
+                    chat_id=update.effective_chat.id,
+                    text=msg_audio_only_activated
+                )
+            elif context.args[0] == AUDIO_ONLY_OFF:
+                nublado_bot.audio_only = False
                 context.bot.send_message(
                     chat_id=update.effective_chat.id,
                     text=msg_audio_only_deactivated
                 )
-            except:
-                context.bot.send_message(
+            else:
+                pass
+
+
+def check_audio_only(update: Update, context: CallbackContext):
+    logger.info(nublado_bot)
+    if nublado_bot:
+        if nublado_bot.audio_only:
+            message_id = update.message.message_id
+            context.bot.send_message(
+                chat_id=update.effective_chat.id,
+                text=msg_audio_only
+            )
+            try:
+                context.bot.delete_message(
                     chat_id=update.effective_chat.id,
-                    text=msg_audio_only_not_activated
+                    message_id=message_id
                 )
-        else:
-            pass
-
-
-def remove_message(update: Update, context: CallbackContext):
-    message_id = update.message.message_id
-    context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text=msg_audio_only
-    )
-    try:
-        context.bot.delete_message(
-            chat_id=update.effective_chat.id,
-            message_id=message_id
-        )
-        logger.info("Message deleted")
-    except:
-        logger.error("Message to delete not found.")
+                logger.info("Message deleted")
+            except:
+                logger.error("Message to delete not found.")
 
 
 audio_only_handler = MessageHandler(
     (~ Filters.voice & ~ Filters.photo & ~ Filters.command & ~ Filters.via_bot(NUBLADO_BOT_ID)),
-    remove_message
+    check_audio_only
 )
