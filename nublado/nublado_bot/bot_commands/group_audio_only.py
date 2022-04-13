@@ -32,22 +32,31 @@ msg_audio_only_deactivated = _("Audio-only mode has been deactivated.")
 msg_audio_only_not_activated = _("Audio-only mode is not activated.")
 
 
-def get_dispatcher(bot_token: int):
-    bot = DjangoTelegramConfig.bot_registry.get_bot(bot_token)
-    if bot:
-        return bot.dispatcher
-    else:
-        return None
-
-
 @send_typing_action
 @restricted_group_member(group_id=GROUP_ID, member_status=CHATMEMBER_CREATOR)
 def audio_only(update: Update, context: CallbackContext):
     if len(context.args) >= 1:
+        logger.info("SHIT")
+        dispatcher = context.dispatcher
+        logger.info(dispatcher)
         if context.args[0] == AUDIO_ONLY_ON:
-            pass
+            dispatcher.add_handler(audio_only_handler, HANDLER_GROUP)
+            context.bot.send_message(
+                chat_id=update.effective_chat.id,
+                text=msg_audio_only_activated
+            )
         elif context.args[0] == AUDIO_ONLY_OFF:
-            pass
+            try:
+                dispatcher.remove_handler(audio_only_handler, HANDLER_GROUP)
+                context.bot.send_message(
+                    chat_id=update.effective_chat.id,
+                    text=msg_audio_only_deactivated
+                )
+            except:
+                context.bot.send_message(
+                    chat_id=update.effective_chat.id,
+                    text=msg_audio_only_not_activated
+                )
         else:
             pass
 
@@ -55,12 +64,12 @@ def audio_only(update: Update, context: CallbackContext):
 def remove_message(update: Update, context: CallbackContext):
     message_id = update.message.message_id
     context.bot.send_message(
-        chat_id=GROUP_ID,
+        chat_id=update.effective_chat.id,
         text=msg_audio_only
     )
     try:
         context.bot.delete_message(
-            chat_id=GROUP_ID,
+            chat_id=update.effective_chat.id,
             message_id=message_id
         )
         logger.info("Message deleted")
