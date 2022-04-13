@@ -59,6 +59,7 @@ def audio_only(update: Update, context: CallbackContext):
 def check_audio_only(update: Update, context: CallbackContext):
     logger.info(nublado_bot)
     if nublado_bot:
+        logger.info(nublado_bot.audio_only)
         if nublado_bot.audio_only:
             message_id = update.message.message_id
             context.bot.send_message(
