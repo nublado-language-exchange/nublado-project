@@ -47,7 +47,7 @@ msg_welcome = _(
 msg_welcome_agreed = _(
     "Welcome to the group, {name}.\n\n" \
     "We require new members to introduce themselves with a voice message within one day " \
-    "of their joining. Failure to do so will result in your removal from the group.\n\n" \
+    "of their joining.\n\n" \
     "We look forward to hearing from you."
 )
 
