@@ -101,7 +101,7 @@ def group_top_points(update: Update, context: CallbackContext) -> None:
         )
 
 
-@restricted_group_member(group_id=GROUP_ID)
+@restricted_group_member(group_id=GROUP_ID, private_chat=False)
 @send_typing_action
 def add_points(update: Update, context: CallbackContext) -> None:
     # Check if the message is a reply to another message.
@@ -150,7 +150,7 @@ def add_points(update: Update, context: CallbackContext) -> None:
         )
 
 
-@restricted_group_member(group_id=GROUP_ID)
+@restricted_group_member(group_id=GROUP_ID, private_chat=False)
 @send_typing_action
 def remove_points(update: Update, context: CallbackContext) -> None:
     if update.message.reply_to_message:
