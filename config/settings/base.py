@@ -194,6 +194,7 @@ BOT_MODE_POLLING = "polling"
 #NubladoBot
 # Command line arg to run this bot
 NUBLADO_BOT = 'nubladobot'
+
 NUBLADO_BOT_TOKEN = get_env_variable('NUBLADO_BOT_TOKEN')
 NUBLADO_GROUP_ID = int(get_env_variable('NUBLADO_GROUP_ID'))
 NUBLADO_REPO_ID = int(get_env_variable('NUBLADO_REPO_ID'))
