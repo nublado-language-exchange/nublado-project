@@ -18,7 +18,7 @@ class TelegramGroupMemberManager(BaseUserManager):
             user_id=user_id,
             **kwargs
         )
-        group_member.clean()
+        group_member.full_clean()
         group_member.save(using=self._db)
 
         return group_member

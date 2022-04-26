@@ -1,21 +1,36 @@
 from django.db import models
+from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 from core.models import TimestampModel
 from .managers import (
-    LanguageDayManager, LanguageDayMessageManager
+    LanguageDayManager
 )
 
 
 class LanguageDay(TimestampModel):
-    id = models.CharField(
+    class Weekday(models.IntegerChoices):
+        MON = settings.MON, _('Monday')
+        TUE = settings.TUE, _('Tuesday')
+        WED = settings.WED, _('Wednesday')
+        THU = settings.THU, _('Thursday')
+        FRI = settings.FRI, _('Friday')
+        SAT = settings.SAT, _('Saturday')
+        SUN = settings.SUN, _('Sunday')
+
+    class Language(models.TextChoices):
+        EN = settings.EN, _('English')
+        ES = settings.ES, _('Spanish')
+        FREE = settings.FREE, _('Free')
+
+    id = models.IntegerField(
         primary_key=True,
-        max_length=5,
-        editable=False
+        choices=Weekday.choices
     )
-    name = models.CharField(
-        max_length=255,
-        unique=True
+    language = models.CharField(
+        max_length=10,
+        choices=Language.choices,
+        default=Language.FREE
     )
 
     objects = LanguageDayManager()
@@ -25,31 +40,32 @@ class LanguageDay(TimestampModel):
         verbose_name_plural = _("language days")
 
     def __str__(self):
-        return "id: {0}, name: {1}".format(
+        return "id: {0} - {1}, language: {2}".format(
             self.id,
-            self.name
+            self.Weekday.labels[self.id],
+            self.language
         )
 
 
-class LanguageDayMessage(TimestampModel):
-    """A message to be displayed at the beginning of a language day."""
-    id = models.PositiveBigIntegerField(
-        primary_key=True
-    )
-    language_day = models.ForeignKey(
-        LanguageDay,
-        on_delete=models.CASCADE
-    )
+# class LanguageDayMessage(TimestampModel):
+#     """A message to be displayed at the beginning of a language day."""
+#     id = models.PositiveBigIntegerField(
+#         primary_key=True
+#     )
+#     language_day = models.ForeignKey(
+#         LanguageDay,
+#         on_delete=models.CASCADE
+#     )
 
-    objects = LanguageDayMessageManager()
+#     objects = LanguageDayMessageManager()
 
-    class Meta:
-        verbose_name = _("language day message")
-        verbose_name_plural = _("language day messages")
+#     class Meta:
+#         verbose_name = _("language day message")
+#         verbose_name_plural = _("language day messages")
 
-    def __str__(self):
-        return "message_id: {0}".format(
-            self.id
-        )
+#     def __str__(self):
+#         return "message_id: {0}".format(
+#             self.id
+#         )
 
 

@@ -23,7 +23,7 @@ class GroupNoteManager(BaseUserManager):
                 content=content
                 **kwargs
             )
-            group_note.clean()
+            group_note.full_clean()
             group_note.save(using=self._db)
             return group_note
         elif message_id:

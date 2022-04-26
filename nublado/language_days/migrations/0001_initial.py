@@ -13,20 +13,16 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='GroupNote',
+            name='LanguageDay',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('date_created', models.DateTimeField(default=django.utils.timezone.now, editable=False, verbose_name='date created')),
                 ('date_updated', models.DateTimeField(auto_now=True, verbose_name='date updated')),
-                ('group_id', models.BigIntegerField()),
-                ('note_tag', models.CharField(max_length=255)),
-                ('message_id', models.BigIntegerField(null=True)),
-                ('content', models.TextField(blank=True, null=True)),
+                ('id', models.IntegerField(choices=[(0, 'Monday'), (1, 'Tuesday'), (2, 'Wednesday'), (3, 'Thursday'), (4, 'Friday'), (5, 'Saturday'), (6, 'Sunday')], primary_key=True, serialize=False)),
+                ('language', models.CharField(choices=[('en', 'English'), ('es', 'Spanish'), ('free', 'Free')], max_length=10)),
             ],
             options={
-                'verbose_name': 'Bot note',
-                'verbose_name_plural': 'Bot notes',
-                'unique_together': {('group_id', 'note_tag')},
+                'verbose_name': 'language day',
+                'verbose_name_plural': 'language days',
             },
         ),
     ]

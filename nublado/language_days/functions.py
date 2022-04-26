@@ -2,6 +2,8 @@ from django.conf import settings
 from django.utils import timezone
 from django.utils.translation import activate, gettext as _
 
+from language_days.models import LanguageDay
+
 # Make decorator for language day translations.
 
 def set_language_day_locale():
@@ -18,11 +20,10 @@ def get_language_day() -> str:
     weekday = timezone.now().weekday()
 
     if 0 <= weekday <= 6:
-        if weekday in settings.LANGUAGE_DAY_SCHEDULE[settings.ES]:
-            language_day = settings.ES
-        elif weekday in settings.LANGUAGE_DAY_SCHEDULE[settings.EN]:
-            language_day = settings.EN
-        else:
+        try:
+            ld = LanguageDay.objects.get(id=weekday)
+            language_day = ld.language
+        except LanguageDay.DoesNotExist:
             language_day = settings.FREE
     else:
         raise ValueError("Weekday must be between 0 and 6, inclusive.")
@@ -39,7 +40,8 @@ def get_language_day_schedule() -> str:
         timezone=settings.TIME_ZONE
     )
 
-    for language, weekdays in settings.LANGUAGE_DAY_SCHEDULE.items():
+    for language in LanguageDay.Language.values:
+        weekdays = LanguageDay.objects.filter(language=language).values_list('id', flat=True).order_by('id')
         if weekdays:
             weekday_abbr_list = [_(settings.WEEKDAYS_ABBR[weekday]) for weekday in weekdays]
             weekday_abbr = ", ".join(weekday_abbr_list) if weekday_abbr_list else ""
