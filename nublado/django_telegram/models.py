@@ -37,6 +37,5 @@ class TmpMessage(TimestampModel):
         verbose_name_plural = _("tmp messages")
         unique_together = ('message_id', 'chat_id')
 
-
     def __str__(self):
         return "message_id: {}".format(self.message_id)

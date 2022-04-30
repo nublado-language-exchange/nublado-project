@@ -23,6 +23,7 @@ from django_telegram.bot_utils.user_utils import get_username_or_name
 from django_telegram.bot_utils.user_status import (
     restricted_group_member
 )
+from django_telegram.bot_utils.functions import update_group_members_from_admins
 from django_telegram.models import TelegramGroupMember
 from language_days.functions import set_language_day_locale
 
@@ -50,6 +51,25 @@ msg_welcome_agreed = _(
     "of their joining.\n\n" \
     "We look forward to hearing from you."
 )
+
+
+@send_typing_action
+@restricted_group_member(
+    group_id=GROUP_ID,
+    member_status=CHATMEMBER_CREATOR,
+    group_chat=False
+)
+def update_group_admins(update: Update, context: CallbackContext) -> None:
+    members = update_group_members_from_admins(context.bot, GROUP_ID)
+    if members:
+        message = _("Group members updated from admins.")
+    else:
+        message = _("Group members not updated from admins.")
+
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=message
+    )
 
 
 def add_member(user_id, group_id):
@@ -107,33 +127,6 @@ def unrestrict_chat_member(bot: Bot, user_id: int, chat_id: int, interval_minute
     except:
         logger.error("Error unrestricting member " + user_id)
         return False
-
-
-@send_typing_action
-@restricted_group_member(group_id=GROUP_ID, member_status=CHATMEMBER_CREATOR)
-def update_group_members(update: Update, context: CallbackContext) -> None:
-    member_list = []
-    group_members = TelegramGroupMember.objects.filter(group_id=GROUP_ID)
-
-    for member in group_members:
-        user_id = member.user_id
-        try:
-            chat_member = context.bot.get_chat_member(
-                GROUP_ID, user_id
-            )
-            user = chat_member.user
-            name = get_username_or_name(user)
-            member_list.append("*{}*".format(name))
-        except TelegramError:
-            logger.info("User id {} not in group {}".format(user_id, GROUP_ID))
-
-    message = _("*Members*\n{member_list}").format(
-        member_list="\n".join(member_list)
-    )
-    context.bot.send_message(
-        chat_id=update.effective_chat.id,
-        text=message
-    )
 
 
 def member_join(update: Update, context: CallbackContext) -> None:

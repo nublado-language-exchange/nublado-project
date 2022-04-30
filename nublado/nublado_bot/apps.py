@@ -15,7 +15,7 @@ class NubladoBotConfig(AppConfig):
 
     def ready(self):
         from .bot_commands.group_admin import(
-            update_group_members,
+            update_group_admins,
             member_join_handler,
             member_exit_handler,
             welcome_button_handler
@@ -42,7 +42,7 @@ class NubladoBotConfig(AppConfig):
 
         # Register handlers
         # group_admin
-        bot.add_command_handler('update_group_members', update_group_members)
+        bot.add_command_handler('update_group_admins', update_group_admins)
         bot.add_handler(member_join_handler, handler_group=2)
         bot.add_handler(member_exit_handler, handler_group=2)
         bot.add_handler(welcome_button_handler, handler_group=2)
