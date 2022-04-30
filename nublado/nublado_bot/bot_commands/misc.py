@@ -7,11 +7,11 @@ from telegram.constants import CHATMEMBER_CREATOR
 from django.conf import settings
 from django.utils.translation import gettext as _
 
-from django_telegram.bot_utils.chat_actions import send_typing_action
-from django_telegram.bot_utils.user_status import (
+from django_telegram.functions.chat_actions import send_typing_action
+from django_telegram.functions.group import (
     restricted_group_member
 )
-from django_telegram.bot_utils.functions import parse_command_last_arg_text
+from django_telegram.functions.functions import parse_command_last_arg_text
 
 logger = logging.getLogger('django')
 

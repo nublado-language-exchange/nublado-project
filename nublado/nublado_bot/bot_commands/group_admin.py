@@ -9,21 +9,20 @@ from telegram import (
 from telegram.ext import (
     CallbackContext, CallbackQueryHandler, MessageHandler, Filters
 )
-from telegram.error import TelegramError
 from telegram.constants import CHATMEMBER_CREATOR
 
 from django.conf import settings
 from django.utils.translation import gettext as _
 
 from django_telegram.models import TelegramGroupMember
-from django_telegram.bot_utils.chat_actions import (
+from django_telegram.functions.chat_actions import (
     send_typing_action
 )
-from django_telegram.bot_utils.user_utils import get_username_or_name
-from django_telegram.bot_utils.user_status import (
+from django_telegram.functions.user import get_username_or_name
+from django_telegram.functions.group import (
     restricted_group_member
 )
-from django_telegram.bot_utils.functions import update_group_members_from_admins
+from django_telegram.functions.admin import update_group_members_from_admins
 from django_telegram.models import TelegramGroupMember
 from language_days.functions import set_language_day_locale
 

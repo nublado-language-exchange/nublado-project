@@ -8,11 +8,11 @@ from telegram.ext import (
 from django.conf import settings
 from django.utils.translation import gettext as _
 
-from django_telegram.bot_utils.user_utils import get_username_or_name
-from django_telegram.bot_utils.chat_actions import (
+from django_telegram.functions.user import get_username_or_name
+from django_telegram.functions.chat_actions import (
     send_typing_action
 )
-from django_telegram.bot_utils.user_status import (
+from django_telegram.functions.group import (
     get_chat_member, restricted_group_member
 )
 from django_telegram.models import TelegramGroupMember
