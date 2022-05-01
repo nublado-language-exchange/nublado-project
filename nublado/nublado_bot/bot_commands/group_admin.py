@@ -22,7 +22,10 @@ from django_telegram.functions.user import get_username_or_name
 from django_telegram.functions.group import (
     restricted_group_member
 )
-from django_telegram.functions.admin import update_group_members_from_admins
+from django_telegram.functions.admin import (
+    update_group_members_from_admins,
+    get_non_group_members
+)
 from django_telegram.models import TelegramGroupMember
 from language_days.functions import set_language_day_locale
 
@@ -50,6 +53,16 @@ msg_welcome_agreed = _(
     "of their joining.\n\n" \
     "We look forward to hearing from you."
 )
+
+
+@send_typing_action
+@restricted_group_member(
+    group_id=GROUP_ID,
+    member_status=CHATMEMBER_CREATOR,
+    group_chat=False
+)
+def get_non_members(update: Update, context: CallbackContext) -> None:
+    get_non_group_members(context.bot, GROUP_ID)
 
 
 @send_typing_action
