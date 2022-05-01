@@ -9,7 +9,8 @@ from django.utils.translation import gettext as _
 
 from django_telegram.functions.chat_actions import send_typing_action
 from django_telegram.functions.group import (
-    restricted_group_member
+    restricted_group_member,
+    get_random_group_member
 )
 from django_telegram.functions.functions import parse_command_last_arg_text
 
@@ -33,6 +34,26 @@ def start(update: Update, context: CallbackContext) -> None:
         chat_id=update.effective_chat.id,
         text=message
     )
+
+
+@restricted_group_member(group_id=GROUP_ID, private_chat=False)
+@send_typing_action
+def hello(update: Update, context: CallbackContext) -> None:
+    member = get_random_group_member(GROUP_ID)
+    if member:
+        try:
+            user = update.effective_user
+            chat_member = context.bot.get_chat_member(GROUP_ID, member.user_id)
+            message = _("Hey {}.\n{} says hello.").format(
+                chat_member.user.mention_markdown(),
+                user.mention_markdown()
+            )
+            context.bot.send_message(
+                chat_id=GROUP_ID,
+                text=message
+            )
+        except:
+            pass      
 
 
 @restricted_group_member(group_id=GROUP_ID, member_status=CHATMEMBER_CREATOR)

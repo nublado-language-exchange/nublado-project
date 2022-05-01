@@ -1,4 +1,5 @@
 import logging
+import random
 from functools import wraps
 
 from telegram import Update, Bot
@@ -10,6 +11,8 @@ from telegram.constants import (
 from telegram.ext import CallbackContext
 
 from django.conf import settings
+
+from ..models import TelegramGroupMember
 
 logger = logging.getLogger('django')
 
@@ -23,6 +26,15 @@ GROUP_TYPES = [
     CHAT_SUPERGROUP
 ]
 BOTS = settings.DJANGO_TELEGRAM['bots']
+
+
+def get_random_group_member(group_id: int):
+    members = TelegramGroupMember.objects.filter(group_id=group_id)
+    if len(members) > 0:
+        index = random.randint(0, len(members) - 1)
+        return members[index]
+    else:
+        return None
 
 
 def get_chat_member(bot: Bot, user_id: int, chat_id: int):
