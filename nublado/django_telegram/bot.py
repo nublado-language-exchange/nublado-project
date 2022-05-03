@@ -13,6 +13,9 @@ from django.core.exceptions import ImproperlyConfigured
 
 logger = logging.getLogger('django')
 
+bot_mode_error = "Bot mode must be polling or webhooks."
+django_telegram_settings_error = "DJANGO_TELEGRAM settings are missing or improperly configured."
+
 
 class Bot(object):
     def __init__(self, token: str):
@@ -26,43 +29,39 @@ class Bot(object):
         self.dispatcher = None
         self.job_queue = None
 
-        dt = settings.DJANGO_TELEGRAM
-        if dt['mode'] == settings.BOT_MODE_POLLING:
-            self.updater = Updater(
-                self.token,
-                use_context=True
-            )
-            self.job_queue = self.updater.job_queue
-            self.dispatcher = self.updater.dispatcher
-        elif dt['mode'] == settings.BOT_MODE_WEBHOOK:
-            self.dispatcher = Dispatcher(self.telegram_bot, None)
-        else:
-            error_msg = "Bot mode must be in {} mode or {} mode.".format(
-                settings.BOT_MODE_POLLING,
-                settings.BOT_MODE_WEBHOOK
-            )
-            logger.error(error_msg)
-            raise ImproperlyConfigured(error_msg)
+        try:
+            dt = settings.DJANGO_TELEGRAM
+            if dt['mode'] == settings.BOT_MODE_POLLING:
+                self.updater = Updater(
+                    self.token,
+                    use_context=True
+                )
+                self.job_queue = self.updater.job_queue
+                self.dispatcher = self.updater.dispatcher
+            elif dt['mode'] == settings.BOT_MODE_WEBHOOK:
+                self.dispatcher = Dispatcher(self.telegram_bot, None)
+            else:
+                raise ImproperlyConfigured(bot_mode_error_msg)
+        except:
+            raise ImproperlyConfigured(django_telegram_settings_error)
 
     def start(self):
-        dt = settings.DJANGO_TELEGRAM
-        if dt['mode'] == settings.BOT_MODE_POLLING:
-            logger.info("Bot mode: polling")
-            self.updater.start_polling()
-            self.updater.idle()
-        elif dt['mode'] == settings.BOT_MODE_WEBHOOK:
-            logger.info("Bot mode: webhooks")
-            webhook_site = remove_lead_and_trail_slash(dt['webhook_site'])
-            webhook_path = remove_lead_and_trail_slash(dt['webhook_path'])
-            webhook_url = f"{webhook_site}/{webhook_path}/{self.token}/"
-            self.telegram_bot.set_webhook(webhook_url)
-        else:
-            error_msg = "Bot mode must be in {} mode or {} mode.".format(
-                settings.BOT_MODE_POLLING,
-                settings.BOT_MODE_WEBHOOK
-            )
-            logger.error(error_msg)
-            raise ImproperlyConfigured(error_msg)
+        try:
+            dt = settings.DJANGO_TELEGRAM
+            if dt['mode'] == settings.BOT_MODE_POLLING:
+                logger.info("Bot mode: polling")
+                self.updater.start_polling()
+                self.updater.idle()
+            elif dt['mode'] == settings.BOT_MODE_WEBHOOK:
+                logger.info("Bot mode: webhooks")
+                webhook_site = remove_lead_and_trail_slash(dt['webhook_site'])
+                webhook_path = remove_lead_and_trail_slash(dt['webhook_path'])
+                webhook_url = f"{webhook_site}/{webhook_path}/{self.token}/"
+                self.telegram_bot.set_webhook(webhook_url)
+            else:
+                raise ImproperlyConfigured(bot_mode_error)
+        except:
+            raise ImproperlyConfigured(django_telegram_settings_error)
 
     def add_handler(self, handler, handler_group: int = 0):
         try:
