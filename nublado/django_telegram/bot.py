@@ -28,6 +28,7 @@ class Bot(object):
         self.updater = None
         self.dispatcher = None
         self.job_queue = None
+        self.running = False
 
         try:
             dt = settings.DJANGO_TELEGRAM
@@ -46,22 +47,24 @@ class Bot(object):
             raise ImproperlyConfigured(django_telegram_settings_error)
 
     def start(self):
-        try:
-            dt = settings.DJANGO_TELEGRAM
-            if dt['mode'] == settings.BOT_MODE_POLLING:
-                logger.info("Bot mode: polling")
-                self.updater.start_polling()
-                self.updater.idle()
-            elif dt['mode'] == settings.BOT_MODE_WEBHOOK:
-                logger.info("Bot mode: webhooks")
-                webhook_site = remove_lead_and_trail_slash(dt['webhook_site'])
-                webhook_path = remove_lead_and_trail_slash(dt['webhook_path'])
-                webhook_url = f"{webhook_site}/{webhook_path}/{self.token}/"
-                self.telegram_bot.set_webhook(webhook_url)
-            else:
-                raise ImproperlyConfigured(bot_mode_error)
-        except:
-            raise ImproperlyConfigured(django_telegram_settings_error)
+        if not self.running:
+            try:
+                dt = settings.DJANGO_TELEGRAM
+                if dt['mode'] == settings.BOT_MODE_POLLING:
+                    logger.info("Bot mode: polling")
+                    self.updater.start_polling()
+                    self.updater.idle()
+                elif dt['mode'] == settings.BOT_MODE_WEBHOOK:
+                    logger.info("Bot mode: webhooks")
+                    webhook_site = remove_lead_and_trail_slash(dt['webhook_site'])
+                    webhook_path = remove_lead_and_trail_slash(dt['webhook_path'])
+                    webhook_url = f"{webhook_site}/{webhook_path}/{self.token}/"
+                    self.telegram_bot.set_webhook(webhook_url)
+                else:
+                    raise ImproperlyConfigured(bot_mode_error)
+                self.running = True
+            except:
+                raise ImproperlyConfigured(django_telegram_settings_error)
 
     def add_handler(self, handler, handler_group: int = 0):
         try:
