@@ -162,7 +162,7 @@ LOGGING = {
     },
 }
 
-# Language day schedule (Change to LANGUAGE_DAYS -> Language day stuff)
+# Language day schedule
 EN = 'en'
 ES = 'es'
 FREE = 'free'
