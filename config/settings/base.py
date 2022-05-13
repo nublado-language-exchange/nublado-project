@@ -25,6 +25,8 @@ sys.path.append(os.path.join(BASE_DIR, APP_DIR))
 
 APPS_ROOT = BASE_DIR / APP_DIR
 
+PROJECT_NAME = "Nublado Project"
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = get_env_variable('DJANGO_SECRET_KEY')
 
@@ -77,6 +79,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'project_app.context_processors.global_settings'
             ],
         },
     },

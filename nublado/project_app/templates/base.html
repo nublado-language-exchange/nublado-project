@@ -10,11 +10,145 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>
-Hello
+{% block title %}{% endblock title %} | {{ project_name }}
 </title>
+
+<link rel="icon" href="{% static 'favicon.ico' %}">
+
+{% block stylesheets %}
+
+<link rel="stylesheet" href="{% static 'css/app.css' %}" />
+<link rel="stylesheet" href="{% static 'css/fontawesome-all.css' %}" />
+
+{% endblock stylesheets %}
+
+{% block styles %}
+{% endblock styles %}
+
 </head>
 
-<body style="min-height: 100vh;">
-<h1 style="font-size: 50px;">Hello there.</h1>
+<body class="{% block body_classes %}sidebar-animated{% endblock body_classes %}" style="min-height: 100vh;">
+
+<div id="app-container">
+
+{% block navbar %}
+
+<nav class="navbar is-bordered" role="navigation" aria-label="main navigation">
+
+<div class="navbar-brand">
+
+<a 
+role="button" 
+class="navbar-sidebar-trigger" 
+aria-label="navbar-sidebar-trigger" 
+@click.prevent="toggleSidebar"
+>
+<span></span>
+<span></span>
+<span></span>
+</a>
+
+<a class="navbar-item" href="{% url 'project_app:home' %}">
+<img src="{% static 'images/nublado-logo.png' %}" alt="nublado-logo">
+</a>
+
+</div>
+
+<div 
+id="navbar-menu" 
+class="navbar-menu"
+ref="navbarMenu"
+>
+
+<div class="navbar-end">
+
+<a class="navbar-item">
+Login
+</a>
+
+</div><!-- navbar-end -->
+
+</div><!-- navbar-menu -->
+
+</nav>
+
+{% endblock navbar %}
+
+{% block sidebar %}
+
+<!-- sidebar -->
+<div id="sidebar-overlay" class="sidebar-overlay" @click="toggleSidebar(false)"></div>
+
+<div
+id="sidebar"
+class="sidebar"
+ref="sidebar"
+>
+<div class="sidebar-container">
+
+<div class="sidebar-navbar">
+
+<a 
+role="button" 
+class="navbar-sidebar-trigger" 
+aria-label="sidebar-trigger" 
+@click.prevent="toggleSidebar"
+>
+<span></span>
+<span></span>
+<span></span>
+</a>
+
+<a class="navbar-item" href="{% url 'project_app:home' %}">
+<img src="{% static 'images/nublado-logo.png' %}" alt="nublado-logo">
+</a>
+
+</div><!-- sidebar-navbar -->
+
+<div class="sidebar-body">
+
+{% block sidebar_nav_items %}
+
+<div class="menu">
+
+<p class="menu-label">
+General
+</p>
+
+<ul class="menu-list">
+<li>
+<a href="{% url 'project_app:home' %}" ><i class="fas fa-fw fa-home menu-icon"></i> Home</a>
+</li>
+<li>
+<a><i class="fas fa-fw fa-language menu-icon"></i> Settings</a>
+</li>
+</ul>
+
+</div>
+
+{% endblock sidebar_nav_items %}
+
+</div><!--sidebar-body -->
+
+<div class="sidebar-footer">
+</div>
+
+</div><!-- sidebar-container -->
+</div><!-- sidebar -->
+
+{% endblock sidebar %}
+
+</div><!-- app-container -->
+
+{% block scripts %}
+<script>
+var sidebarExpanded = false;
+</script>
+
+<script src="{% static 'js/vue3.js' %}"></script>
+<script src="{% static 'js/vue/app.js' %}"></script>
+
+{% endblock scripts %}
+
 </body>
 </html>
