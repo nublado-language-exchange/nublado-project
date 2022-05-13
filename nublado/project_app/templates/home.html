@@ -1,8 +1,17 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}
+{% block title %}{% trans "Home" %}{% endblock title %}
 
-{% trans "Home" %}
+{% block hero_section %}
+<section class="parallax-hero">
 
-{% endblock title %}
+<div class="hero-body">
+
+<div class="title is-size-1">{% trans "Welcome to the Nublado Project." %}</div>
+<div class="subtitle is-size-3">{% trans "English and Spanish" %}</div>
+
+</div>
+
+</section>
+{% endblock hero_section %}
