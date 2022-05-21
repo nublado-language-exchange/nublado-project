@@ -27,8 +27,8 @@ ADD_POINTS_CHAR = '+'
 ADD_POINTS_REGEX = '^[' + ADD_POINTS_CHAR + '][\s\S]*$'
 REMOVE_POINTS_CHAR = '-'
 REMOVE_POINTS_REGEX = '^[' + REMOVE_POINTS_CHAR + '][\s\S]*$'
-POINT_NAME = _("droplet of deadly poison")
-POINTS_NAME = _("droplets of deadly poison")
+POINT_NAME = _("magical trinket")
+POINTS_NAME = _("magical trinkets")
 TOP_POINTS_LIMIT = 10
 GROUP_ID = settings.NUBLADO_GROUP_ID
 
