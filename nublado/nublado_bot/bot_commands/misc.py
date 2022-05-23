@@ -96,6 +96,18 @@ def reverse_text(update: Update, context: CallbackContext) -> None:
 @send_typing_action
 def roll_dice(update: Update, context: CallbackContext) -> None:
     """Roll dice."""
-    context.bot.send_dice(
+    user = update.effective_user
+    result = context.bot.send_dice(
         chat_id=GROUP_ID
+    )
+
+    value = result['dice']['value']
+    user = update.effective_user
+    message = _("{} has rolled a {}.").format(
+        user.mention_markdown(),
+        value
+    )
+    context.bot.send_message(
+        chat_id=GROUP_ID,
+        text=message
     )

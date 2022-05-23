@@ -35,7 +35,8 @@ class Bot(object):
             if dt['mode'] == settings.BOT_MODE_POLLING:
                 self.updater = Updater(
                     self.token,
-                    use_context=True
+                    use_context=True,
+                    defaults=defaults
                 )
                 self.job_queue = self.updater.job_queue
                 self.dispatcher = self.updater.dispatcher
