@@ -35,7 +35,7 @@ class NubladoBotConfig(AppConfig):
             initiate_language_day
         )
         from .bot_commands.group_points import (
-            group_top_points, add_points_handler, remove_points_handler
+            add_points_handler, remove_points_handler
         )
 
         bot_registry = DjangoTelegramConfig.bot_registry
@@ -67,7 +67,6 @@ class NubladoBotConfig(AppConfig):
         # group_points
         bot.add_handler(add_points_handler, handler_group=2)
         bot.add_handler(remove_points_handler, handler_group=2)
-        bot.add_command_handler('top_points', group_top_points)
         # notes
         bot.add_command_handler('group_notes', group_notes)
         bot.add_command_handler('save_group_note', save_group_note)
