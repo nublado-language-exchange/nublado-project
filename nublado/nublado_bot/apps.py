@@ -14,7 +14,7 @@ class NubladoBotConfig(AppConfig):
     bot_key = settings.NUBLADO_BOT_TOKEN
 
     def ready(self):
-        from bot_notes.bot_commands import (
+        from .bot_commands.group_notes import (
             group_notes,
             save_group_note,
             remove_group_note,
