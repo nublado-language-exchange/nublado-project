@@ -50,7 +50,7 @@ msg_welcome = _(
 msg_welcome_agreed = _(
     "Welcome to the group, {name}.\n\n" \
     "We require new members to introduce themselves with a voice message within one day " \
-    "of their joining.\n\n" \
+    "of their joining. This helps us filter out fake accounts, trolls, etc.\n\n" \
     "We look forward to hearing from you."
 )
 
