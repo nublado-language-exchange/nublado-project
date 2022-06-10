@@ -28,7 +28,7 @@ class NubladoBotConfig(AppConfig):
             welcome_button_handler
         )
         from .bot_commands.misc import (
-            start, echo, reverse_text, hello, roll_dice
+            start, echo, reverse_text, hello, roll_die
         )
         from .bot_commands.language_days import (
             schedule, language_day, initiate_language_day_c,
@@ -53,7 +53,7 @@ class NubladoBotConfig(AppConfig):
         bot.add_command_handler('reverse', reverse_text)
         bot.add_command_handler('echo', echo)
         bot.add_command_handler('hello', hello)
-        bot.add_command_handler('roll_dice', roll_dice)
+        bot.add_command_handler('roll_die', roll_die)
         # language_days
         bot.add_command_handler('schedule', schedule)
         bot.add_command_handler('language_day', language_day)

@@ -94,8 +94,8 @@ def reverse_text(update: Update, context: CallbackContext) -> None:
 
 @restricted_group_member(group_id=GROUP_ID, private_chat=False)
 @send_typing_action
-def roll_dice(update: Update, context: CallbackContext) -> None:
-    """Roll dice."""
+def roll_die(update: Update, context: CallbackContext) -> None:
+    """Roll a die."""
     user = update.effective_user
     result = context.bot.send_dice(
         chat_id=GROUP_ID
