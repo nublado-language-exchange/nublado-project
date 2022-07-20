@@ -1,3 +1,4 @@
+import random
 import logging
 
 from telegram import Update
@@ -95,7 +96,7 @@ def reverse_text(update: Update, context: CallbackContext) -> None:
 @restricted_group_member(group_id=GROUP_ID, private_chat=False)
 @send_typing_action
 def roll_die(update: Update, context: CallbackContext) -> None:
-    """Roll a die."""
+    """Roll a die and show an animation."""
     user = update.effective_user
     result = context.bot.send_dice(
         chat_id=GROUP_ID
@@ -111,3 +112,42 @@ def roll_die(update: Update, context: CallbackContext) -> None:
         chat_id=GROUP_ID,
         text=message
     )
+
+
+@restricted_group_member(group_id=GROUP_ID, private_chat=True)
+@send_typing_action
+def roll_dice(update: Update, context: CallbackContext) -> None:
+    """Roll specified number of dice and show results as text."""
+    min_dice = 1
+    max_dice = 10
+    dice_min_val = 1
+    dice_max_val = 6
+    results = []
+    user = update.effective_user
+
+    if len(context.args) >= 1:
+        int_arg = int(context.args[0])
+        if int_arg >= min_dice and int_arg <= max_dice:
+            num_dice = int_arg
+            for x in range(num_dice):
+                result = random.randint(dice_min_val, dice_max_val)
+                results.append(result)
+            total = sum(results)
+            message = _("{} has rolled {}.\n\n Total value: {}").format(
+                user.mention_markdown(),
+                results,
+                total
+            )
+            context.bot.send_message(
+                chat_id=update.effective_chat.id,
+                text=message 
+            )
+    else:
+        message = _("Please specify the number of dice to be rolled ({} - {}).").format(
+            min_dice,
+            max_dice
+        )
+        context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text=message
+        )
