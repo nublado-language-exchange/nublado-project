@@ -114,30 +114,36 @@ def roll_die(update: Update, context: CallbackContext) -> None:
     )
 
 
-@restricted_group_member(group_id=GROUP_ID, private_chat=True)
-@send_typing_action
-def roll_dice(update: Update, context: CallbackContext) -> None:
-    """Roll specified number of dice and show results as text."""
-    min_dice = 1
-    max_dice = 10
-    dice_min_val = 1
-    dice_max_val = 6
-    results = []
-    user = update.effective_user
-
+def roll_dice_c(
+    update: Update,
+    context: CallbackContext,
+    min_dice=1,
+    max_dice=10,
+    dice_min_val=1,
+    dice_max_val=6,
+    dice_sum=False
+):
     if len(context.args) >= 1:
         int_arg = int(context.args[0])
         if int_arg >= min_dice and int_arg <= max_dice:
             num_dice = int_arg
+            results = []
+            user = update.effective_user
             for x in range(num_dice):
                 result = random.randint(dice_min_val, dice_max_val)
                 results.append(result)
-            total = sum(results)
-            message = _("{} has rolled {}.\n\n Total value: {}").format(
-                user.mention_markdown(),
-                results,
-                total
-            )
+            if dice_sum:
+                total = sum(results)
+                message = _("{} has rolled {}.\n\n Sum: {}").format(
+                    user.mention_markdown(),
+                    results,
+                    total
+                )
+            else:
+                message = _("{} has rolled {}.").format(
+                    user.mention_markdown(),
+                    results
+                )
             context.bot.send_message(
                 chat_id=update.effective_chat.id,
                 text=message 
@@ -151,3 +157,18 @@ def roll_dice(update: Update, context: CallbackContext) -> None:
             chat_id=update.effective_chat.id,
             text=message
         )
+
+
+
+@restricted_group_member(group_id=GROUP_ID, private_chat=True)
+@send_typing_action
+def roll(update: Update, context: CallbackContext) -> None:
+    """Roll specified number of dice and show results as text."""
+    roll_dice_c(update, context, dice_sum=False)
+
+
+@restricted_group_member(group_id=GROUP_ID, private_chat=True)
+@send_typing_action
+def roll_sum(update: Update, context: CallbackContext) -> None:
+    """Roll specified number of dice and show results as text."""
+    roll_dice_c(update, context, dice_sum=True)
