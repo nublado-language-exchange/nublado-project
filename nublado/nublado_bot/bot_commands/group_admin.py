@@ -41,16 +41,14 @@ msg_agree = _("I agree.")
 msg_welcome = _(
     "Welcome to the group, {name}.\n\n" \
     "Please read the following rules and click the \"I agree\" button to participate.\n\n" \
-    "*Rules (tentative)*\n" \
+    "*Rules*\n" \
     "- Communicate in only English and Spanish.\n" \
-    "- Don't harass other group members.\n" \
-    "- Don't send private messages to other group members without their permission.\n" \
-    "- Be a good example. There are people here learning your language. Help them out with corrections."
+    "- Be a good example. Help others out with corrections."
 )
 msg_welcome_agreed = _(
     "Welcome to the group, {name}.\n\n" \
-    "We require new members to introduce themselves with a voice message within one day " \
-    "of their joining. This helps us filter out fake accounts, trolls, etc.\n\n" \
+    "We require new members to introduce themselves with a voice message. " \
+    "This helps us filter out fake accounts, trolls, etc.\n\n" \
     "We look forward to hearing from you."
 )
 
